@@ -1,4 +1,5 @@
 import { View, Text, Image } from '@tarojs/components'
+import { ArrowUp } from '@nutui/icons-react-taro'
 import { useRef, useState } from 'react'
 import { CardItem, DragFeedback, SwipeDir } from '../../types'
 import { computeSwipe, shouldFling, flingTransform } from '../../utils/gesture'
@@ -10,6 +11,8 @@ interface SwipeCardProps {
   active?: boolean
   onSwipe: (dir: SwipeDir) => void
   onDrag?: (f: DragFeedback) => void
+  /** 上滑 → 打开详情 */
+  onExpand?: () => void
 }
 
 /** 封面是 emoji 还是图片 URL */
@@ -17,7 +20,7 @@ function isEmojiCover(src: string): boolean {
   return !src.startsWith('cloud') && !src.startsWith('http')
 }
 
-export default function SwipeCard({ item, active = true, onSwipe, onDrag }: SwipeCardProps) {
+export default function SwipeCard({ item, active = true, onSwipe, onDrag, onExpand }: SwipeCardProps) {
   const [transform, setTransform] = useState({ x: 0, y: 0, angle: 0 })
   const [dragging, setDragging] = useState(false)
   const [flying, setFlying] = useState(false)
@@ -53,6 +56,10 @@ export default function SwipeCard({ item, active = true, onSwipe, onDrag }: Swip
       setTransform(f)
       const dir = v.direction as SwipeDir
       setTimeout(() => onSwipe(dir), 300)
+    } else if (v.dy < -90 && Math.abs(v.dy) > Math.abs(v.dx) * 1.4) {
+      // 上滑 → 打开详情
+      onExpand?.()
+      setTransform({ x: 0, y: 0, angle: 0 })
     } else {
       setTransform({ x: 0, y: 0, angle: 0 })
     }
@@ -107,6 +114,12 @@ export default function SwipeCard({ item, active = true, onSwipe, onDrag }: Swip
         {showRight ? '想换!' : '算了'}
       </View>
       <View className={`swipe-card__border ${showRight ? 'border-yes' : 'border-no'}`} style={{ opacity: progress * 0.9 }} />
+
+      {/* 上滑查看详情提示 */}
+      <View className="swipe-card__grab-hint">
+        <ArrowUp size={13} />
+        <Text>上滑看详情</Text>
+      </View>
     </View>
   )
 }

@@ -8,6 +8,7 @@ export default function CardStack() {
   const index = useCardStore(s => s.index)
   const swipe = useCardStore(s => s.swipe)
   const setDragFeedback = useCardStore(s => s.setDragFeedback)
+  const openDetail = useCardStore(s => s.openDetail)
 
   const visible = cards.slice(index, index + 3)
 
@@ -37,6 +38,7 @@ export default function CardStack() {
             active={i === 0}
             onSwipe={dir => swipe(dir)}
             onDrag={setDragFeedback}
+            onExpand={() => openDetail(item)}
           />
         </View>
       ))}

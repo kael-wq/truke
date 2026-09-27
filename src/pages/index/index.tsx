@@ -5,6 +5,7 @@ import { useState } from 'react'
 import CardStack from '../../components/CardStack'
 import ActionButtons from '../../components/ActionButtons'
 import MatchModal from '../../components/MatchModal'
+import ItemDetailSheet from '../../components/ItemDetailSheet'
 import TabBar from '../../components/TabBar'
 import { useCardStore } from '../../stores/useCardStore'
 import './index.scss'
@@ -43,6 +44,7 @@ export default function Index() {
 
       <TabBar current="index" msgBadge={3} />
       <MatchModal />
+      <ItemDetailSheet />
     </View>
   )
 }

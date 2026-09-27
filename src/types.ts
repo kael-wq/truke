@@ -29,6 +29,12 @@ export interface CardItem {
   tags: string[]
   /** 参考价（可选） */
   priceRef?: string
+  /** 物品描述（详情页用） */
+  description?: string
+  /** 物主评分 */
+  rating?: number
+  /** 物主完成交换次数 */
+  swapCount?: number
   boosted: boolean
   pinned: boolean
   /** 超级想换标记：对方会优先看到 */

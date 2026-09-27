@@ -15,6 +15,8 @@ interface CardState {
   dragFeedback: DragFeedback
   /** 最近一次匹配结果，非空时显示 MatchModal */
   lastMatch: MatchResult | null
+  /** 上滑查看的详情物品，非空时显示详情抽屉 */
+  detailItem: CardItem | null
 
   setActiveCategory: (cat: string) => void
   setDragFeedback: (f: DragFeedback) => void
@@ -23,6 +25,8 @@ interface CardState {
   rewind: () => void
   boostLocal: (itemId: string) => void
   clearMatch: () => void
+  openDetail: (item: CardItem) => void
+  closeDetail: () => void
 }
 
 export const useCardStore = create<CardState>((set, get) => ({
@@ -33,6 +37,7 @@ export const useCardStore = create<CardState>((set, get) => ({
   activeCategory: '附近',
   dragFeedback: { dir: 'none', progress: 0 },
   lastMatch: null,
+  detailItem: null,
 
   setActiveCategory(cat) {
     set({ activeCategory: cat, index: 0, history: [] })
@@ -108,5 +113,13 @@ export const useCardStore = create<CardState>((set, get) => ({
 
   clearMatch() {
     set({ lastMatch: null })
+  },
+
+  openDetail(item) {
+    set({ detailItem: item })
+  },
+
+  closeDetail() {
+    set({ detailItem: null })
   }
 }))

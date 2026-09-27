@@ -194,4 +194,24 @@
     &.border-yes { border-color: var(--green); }
     &.border-no { border-color: var(--red); }
   }
+
+  &__grab-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 10rpx;
+    z-index: 7;
+    display: flex;
+    align-items: center;
+    gap: 4rpx;
+    font-size: 20rpx;
+    font-weight: 700;
+    color: var(--ink-faint);
+    pointer-events: none;
+    animation: hintBob 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes hintBob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-6rpx); }
 }
