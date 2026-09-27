@@ -481,14 +481,14 @@ body{
       <div class="swap-summary">
         <div class="swap-col">
           <div class="sc-label">You give</div>
-          <div class="sc-thumb" style="background:#F0EBE6">📖</div>
-          <div class="sc-name">A Brief History of Time (hardcover)</div>
+          <div class="sc-thumb" id="giveThumb" style="background:#F0EBE6">📖</div>
+          <div class="sc-name" id="giveName">A Brief History of Time (hardcover)</div>
         </div>
         <div class="swap-arrow"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M14 6l6 6-6 6"/></svg></div>
         <div class="swap-col">
           <div class="sc-label">You receive</div>
-          <div class="sc-thumb" style="background:#E9E2D8">🎧</div>
-          <div class="sc-name">Sony WH-1000XM4 headphones</div>
+          <div class="sc-thumb" id="receiveThumb" style="background:#E9E2D8">🎧</div>
+          <div class="sc-name" id="receiveName">Sony WH-1000XM4 headphones</div>
         </div>
       </div>
 
@@ -593,7 +593,13 @@ document.getElementById('chips').addEventListener('click', e=>{
 });
 
 /* Swap modal */
-function openSwapModal(){ document.getElementById('swapModal').classList.add('open'); }
+function openSwapModal(){
+  // 默认选中第一件，避免空选择
+  document.querySelectorAll('.my-item').forEach(i=>i.classList.remove('selected'));
+  const first = document.querySelector('.my-item');
+  if(first) first.classList.add('selected');
+  document.getElementById('swapModal').classList.add('open');
+}
 function closeSwapModal(){ document.getElementById('swapModal').classList.remove('open'); }
 function selectItem(el){
   document.querySelectorAll('.my-item').forEach(i=>i.classList.remove('selected'));
@@ -603,10 +609,22 @@ function selectItem(el){
 function sendProposal(){
   const sel = document.querySelector('.my-item.selected');
   if(!sel){ toast('Pick an item to offer first'); return; }
+
+  // 「You give」= 弹窗里选中的库存物品
+  const giveThumb = sel.querySelector('.mi-thumb');
+  document.getElementById('giveThumb').textContent = giveThumb.textContent.trim();
+  document.getElementById('giveThumb').style.background = giveThumb.style.background;
+  document.getElementById('giveName').textContent = sel.querySelector('.mi-name').textContent;
+
+  // 「You receive」= 详情页当前那件物品
+  document.getElementById('receiveThumb').textContent = document.getElementById('detailEmoji').textContent;
+  document.getElementById('receiveThumb').style.background = document.getElementById('detailHero').style.background;
+  document.getElementById('receiveName').textContent = document.getElementById('detailTitle').textContent;
+
   closeSwapModal();
   showScreen('screen-confirm');
   setStatus('pending');
-  toast('Proposal sent to Maya');
+  toast('Proposal sent');
 }
 
 /* Confirmation */
