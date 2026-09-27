@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>换换 SwapSwap · 物品详情</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#4A8C6D;        /* 品牌主色 · 森林绿 */
+  --green-deep:#3A7259;
+  --mint:#A8D9B5;         /* 品牌辅色 · 薄荷 */
+  --mint-soft:#E8F5EE;    /* 想换卡背景 */
+  --cream:#F7F5ED;        /* 暖奶油背景 */
+  --card:#FFFFFF;
+  --tag-bg:#EAE6DC;       /* 信息标签底色 */
+  --ink:#333333;          /* 标题 */
+  --ink-strong:#1A100C;   /* 商品标题 */
+  --body:#666666;         /* 正文 */
+  --caption:#999999;      /* 次要 */
+  --line:#EDEAE2;
+  --gold:#E0A83C;
+  --shadow:0 4px 12px rgba(0,0,0,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC',sans-serif;
+  background:#FFFFFF;                 /* 设备框外：纯白 */
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ink);-webkit-font-smoothing:antialiased;
+}
+
+/* ================= 设备框 ================= */
+.device{
+  position:relative;width:390px;height:844px;
+  background:var(--cream);border-radius:46px;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 30px 70px rgba(0,0,0,.16),0 0 0 10px #fff,0 0 0 12px #E7E3DA;
+}
+.icon{display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ================= 状态栏 + 头部 ================= */
+.topbar{flex:none;background:var(--cream);position:relative;z-index:20}
+.statusbar{
+  height:46px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;font-size:14px;font-weight:700;color:var(--ink-strong);
+}
+.statusbar .sb-right{display:flex;align-items:center;gap:6px}
+.sb-right .icon{width:16px;height:16px;stroke-width:2.2;stroke:var(--ink-strong)}
+.battery{width:22px;height:11px;border:1.4px solid var(--ink-strong);border-radius:3px;position:relative;padding:1.5px}
+.battery::after{content:'';position:absolute;right:-3px;top:3px;width:2px;height:4px;background:var(--ink-strong);border-radius:0 1px 1px 0}
+.battery i{display:block;height:100%;width:72%;background:var(--ink-strong);border-radius:1px}
+
+.app-header{
+  height:56px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-logo{
+  width:34px;height:34px;border-radius:10px;
+  background:linear-gradient(150deg,#5AA07E,var(--green));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 10px rgba(74,140,109,.35);
+}
+.brand-logo .icon{width:19px;height:19px;stroke:#fff;stroke-width:2.1}
+.brand-name{display:flex;align-items:baseline;gap:5px}
+.brand-name b{font-size:17px;font-weight:800;letter-spacing:.2px}
+.brand-name span{font-size:11px;font-weight:700;color:#A9A294;letter-spacing:.6px}
+.header-actions{display:flex;align-items:center;gap:6px}
+.hbtn{width:38px;height:38px;border-radius:50%;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s}
+.hbtn:active{background:rgba(0,0,0,.05)}
+.hbtn .icon{width:22px;height:22px;stroke:var(--ink-strong);stroke-width:1.9}
+
+/* ================= 滚动区 ================= */
+.scroll{flex:1;overflow-y:auto;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+
+/* 2. 商品图 */
+.hero{
+  position:relative;height:286px;
+  background:radial-gradient(120% 90% at 50% 30%,#F4F1E9 0%,#E9E4D7 100%);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.hero-stage{perspective:900px;perspective-origin:50% 40%}
+.keyboard{
+  width:248px;padding:9px;border-radius:12px;
+  background:linear-gradient(160deg,#454545,#333333);
+  transform:rotateX(45deg) rotateZ(-13deg) translateY(-6px);
+  box-shadow:0 26px 44px rgba(40,30,15,.28),0 8px 16px rgba(40,30,15,.18),inset 0 1px 0 rgba(255,255,255,.12);
+}
+.kb-row{display:flex;gap:4px;margin-bottom:4px}
+.kb-row:last-child{margin-bottom:0}
+.kb-row i{flex:1;height:17px;border-radius:4px;background:linear-gradient(180deg,#565656,#464646);box-shadow:inset 0 -1.5px 0 rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.06)}
+.kb-row i.space{flex:6}
+.kb-row i.mid{flex:1.6}
+.badge{
+  position:absolute;top:14px;display:inline-flex;align-items:center;gap:5px;
+  height:28px;padding:0 12px;border-radius:999px;
+  background:var(--green);color:#fff;font-size:13px;font-weight:700;
+  box-shadow:0 4px 10px rgba(74,140,109,.3);
+}
+.badge .icon{width:14px;height:14px;stroke:#fff;stroke-width:2.2;fill:#fff}
+.badge-cond{left:14px}
+.badge-boost{right:14px;background:#4A8C6D}
+.badge-boost .icon{fill:none}
+
+/* 3. 想换卡（独立卡片，不覆盖图片） */
+.wish-card{
+  margin:14px 16px 0;background:var(--mint-soft);border-radius:16px;
+  padding:12px 14px;display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow);
+}
+.wish-label{
+  flex:none;background:var(--green);color:#fff;font-size:13px;font-weight:800;
+  padding:6px 14px;border-radius:999px;letter-spacing:1px;
+}
+.wish-text{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.4}
+.wish-text b{font-weight:800}
+
+/* 4. 商品信息 */
+.info{padding:18px 16px 0}
+.info h1{font-size:20px;font-weight:800;color:var(--ink-strong);letter-spacing:-.3px;line-height:1.3}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tag{
+  display:inline-flex;align-items:center;gap:5px;background:var(--tag-bg);
+  color:#5F5A4E;font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:999px;
+}
+.tag .icon{width:13px;height:13px;stroke:#8A8371;stroke-width:1.9}
+
+/* 5. 卖家信任卡 */
+.seller{
+  margin:16px;background:var(--card);border-radius:18px;box-shadow:var(--shadow);
+  padding:14px;display:flex;align-items:center;gap:12px;
+}
+.avatar-wrap{position:relative;flex:none}
+.avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(150deg,#F3DEC2,#E7C48F);
+  display:flex;align-items:center;justify-content:center;font-size:27px;
+}
+.shield{
+  position:absolute;right:-3px;bottom:-3px;width:20px;height:20px;border-radius:50%;
+  background:var(--green);display:flex;align-items:center;justify-content:center;border:2.5px solid var(--card);
+}
+.shield .icon{width:11px;height:11px;stroke:#fff;stroke-width:2.6}
+.seller-info{flex:1;min-width:0}
+.seller-name{display:flex;align-items:center;gap:7px}
+.seller-name b{font-size:15px;font-weight:800;color:var(--ink-strong)}
+.rating{display:flex;align-items:center;gap:3px;font-size:12.5px;font-weight:700;color:var(--ink)}
+.rating .icon{width:13px;height:13px;fill:var(--gold);stroke:var(--gold);stroke-width:1}
+.seller-sub{font-size:12px;color:var(--caption);font-weight:500;margin-top:4px}
+.distance{
+  flex:none;display:inline-flex;align-items:center;gap:4px;
+  background:var(--mint-soft);color:var(--green);font-size:12.5px;font-weight:800;
+  padding:7px 11px;border-radius:999px;
+}
+.distance .icon{width:13px;height:13px;stroke:var(--green);stroke-width:2}
+
+/* 6. 物品描述 */
+.desc{padding:4px 16px 24px}
+.desc-head{display:flex;align-items:center;gap:12px;margin:6px 0 12px}
+.desc-head h2{font-size:15px;font-weight:800;color:var(--ink-strong);flex:none}
+.desc-head .rule{flex:1;height:1px;background:var(--line)}
+.desc p{font-size:14px;line-height:1.7;color:var(--body)}
+.desc .more{display:inline-block;margin-top:8px;font-size:13.5px;font-weight:700;color:var(--green);cursor:pointer}
+
+/* 7. 底部操作栏 */
+.action-bar{
+  flex:none;background:var(--cream);border-top:1px solid var(--line);
+  padding:12px 16px;display:flex;gap:12px;
+}
+.btn{
+  height:48px;border-radius:16px;font-family:inherit;font-size:15px;font-weight:800;
+  cursor:pointer;border:none;transition:transform .12s,opacity .12s;
+}
+.btn:active{transform:scale(.98)}
+.btn-ghost{
+  flex:none;width:120px;background:transparent;color:var(--green);
+  border:1.6px solid var(--green);
+}
+.btn-solid{
+  flex:1;background:var(--green);color:#fff;
+  box-shadow:0 6px 16px rgba(74,140,109,.35);
+}
+
+/* 8. 底部导航 */
+.tabbar{
+  flex:none;background:var(--card);border-top:1px solid var(--line);
+  display:flex;align-items:flex-end;justify-content:space-around;
+  padding:8px 6px 14px;
+}
+.tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  background:none;border:none;cursor:pointer;font-family:inherit;
+  font-size:10.5px;font-weight:700;color:#A9A294;position:relative;padding:0;
+}
+.tab .icon{width:23px;height:23px;stroke:#B4AE9F;stroke-width:1.8}
+.tab.active{color:var(--green)}
+.tab.active .icon{stroke:var(--green)}
+.tab.active .icon .fillable{fill:var(--mint);stroke:var(--green)}
+.tab .badge-count{
+  position:absolute;top:-3px;left:50%;transform:translateX(6px);
+  min-width:17px;height:17px;background:#E8574A;color:#fff;font-size:10px;font-weight:800;
+  border-radius:9px;display:flex;align-items:center;justify-content:center;
+  padding:0 4px;border:2px solid var(--card);
+}
+.tab-post{flex:1;display:flex;justify-content:center;margin-top:-22px}
+.tab-post .post{
+  width:54px;height:54px;border-radius:50%;background:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 18px rgba(74,140,109,.45);border:4px solid var(--card);cursor:pointer;
+}
+.tab-post .post .icon{width:24px;height:24px;stroke:#fff;stroke-width:2.6}
+</style>
+</head>
+<body>
+
+<div class="device">
+
+  <!-- ===== 1. 状态栏 + 头部 ===== -->
+  <div class="topbar">
+    <div class="statusbar">
+      <span>15:52</span>
+      <div class="sb-right">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 17h2M8 17h2M13 17h2" stroke-width="3"/><path d="M6 13v4M11 9v8M16 5v12"/></svg>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+        <div class="battery"><i></i></div>
+      </div>
+    </div>
+    <div class="app-header">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M8 8 4 12l4 4M16 8l4 4-4 4M4 12h16"/></svg>
+        </div>
+        <div class="brand-name"><b>换换</b><span>SwapSwap</span></div>
+      </div>
+      <div class="header-actions">
+        <button class="hbtn" title="收藏">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.8A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.2C19 15.6 12 20 12 20Z"/></svg>
+        </button>
+        <button class="hbtn" title="更多">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 滚动内容 ===== -->
+  <div class="scroll">
+
+    <!-- 2. 商品图 Hero -->
+    <div class="hero">
+      <span class="badge badge-cond">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3.5 20 12l-8 8.5L4 12z"/></svg>
+        95新
+      </span>
+      <span class="badge badge-boost">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M13 3 5.5 13.5H11l-1 7.5 8-11H12z"/></svg>
+        已Boost
+      </span>
+      <div class="hero-stage">
+        <div class="keyboard">
+          <div class="kb-row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="kb-row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="mid"></i></div>
+          <div class="kb-row"><i class="mid"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="mid"></i></div>
+          <div class="kb-row"><i class="mid"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="mid"></i></div>
+          <div class="kb-row"><i></i><i></i><i></i><i class="space"></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 想换卡 -->
+    <div class="wish-card">
+      <span class="wish-label">想换</span>
+      <span class="wish-text">Switch 游戏机 / 蓝牙音箱</span>
+    </div>
+
+    <!-- 4. 商品信息 -->
+    <div class="info">
+      <h1>罗技 G613 机械键盘</h1>
+      <div class="tags">
+        <span class="tag"><svg class="icon" viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5-8 4.5z"/><path d="M4 8.5V16l8 4 8-4V8.5"/></svg>含原装盒</span>
+        <span class="tag"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3.5 19 6v5c0 5-3 7.6-7 9.5-4-1.9-7-4.5-7-9.5V6z"/></svg>在保至2026.03</span>
+        <span class="tag"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.2-6.5-10.4A6.5 6.5 0 0 1 12 4a6.5 6.5 0 0 1 6.5 6.6C18.5 15.8 12 21 12 21Z"/><circle cx="12" cy="10.3" r="2.2"/></svg>可面交</span>
+      </div>
+    </div>
+
+    <!-- 5. 卖家信任卡 -->
+    <div class="seller">
+      <div class="avatar-wrap">
+        <div class="avatar">🐻</div>
+        <span class="shield"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+      </div>
+      <div class="seller-info">
+        <div class="seller-name">
+          <b>熊仔</b>
+          <span class="rating"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3.2l2.6 5.6 6.1.7-4.5 4.1 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.5l6.1-.7z"/></svg>4.8</span>
+        </div>
+        <div class="seller-sub">已换 23 次</div>
+      </div>
+      <span class="distance"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.2-6.5-10.4A6.5 6.5 0 0 1 12 4a6.5 6.5 0 0 1 6.5 6.6C18.5 15.8 12 21 12 21Z"/><circle cx="12" cy="10.3" r="2.2"/></svg>0.8km</span>
+    </div>
+
+    <!-- 6. 物品描述 -->
+    <div class="desc">
+      <div class="desc-head"><h2>物品描述</h2><span class="rule"></span></div>
+      <p>罗技 G613 无线机械键盘，Lightspeed 连接几乎零延迟，续航约 18 个月。键帽无油无划痕，附原装腕托与 USB 接收器，因换了静音轴闲置出掉，可约地铁站当面试打。</p>
+      <span class="more">展开</span>
+    </div>
+
+  </div>
+
+  <!-- ===== 7. 底部操作栏 ===== -->
+  <div class="action-bar">
+    <button class="btn btn-ghost">聊一聊</button>
+    <button class="btn btn-solid">提出交换</button>
+  </div>
+
+  <!-- ===== 8. 底部导航 ===== -->
+  <nav class="tabbar">
+    <button class="tab active">
+      <svg class="icon" viewBox="0 0 24 24"><circle class="fillable" cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>
+      发现
+    </button>
+    <button class="tab">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 5.5h16v11H9.5L4 20z"/></svg>
+      消息
+      <span class="badge-count">3</span>
+    </button>
+    <div class="tab-post">
+      <button class="post"><svg class="icon" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></svg></button>
+    </div>
+    <button class="tab">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.8A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.2C19 15.6 12 20 12 20Z"/></svg>
+      愿望单
+    </button>
+    <button class="tab">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c0-4 3.4-6 7.5-6s7.5 2 7.5 6"/></svg>
+      我的
+    </button>
+  </nav>
+
+</div>
+
+</body>
+</html>
