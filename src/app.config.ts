@@ -12,10 +12,10 @@ export default defineAppConfig({
   ],
   window: {
     backgroundTextStyle: 'light',
-    navigationBarBackgroundColor: '#F5F0E8',
+    navigationBarBackgroundColor: '#EBE2CE',
     navigationBarTitleText: '换换',
     navigationBarTextStyle: 'black',
-    backgroundColor: '#F5F0E8'
+    backgroundColor: '#EBE2CE'
   },
   permission: {
     'scope.userLocation': {

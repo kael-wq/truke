@@ -19,18 +19,18 @@
   &--md { width: 116rpx; height: 116rpx; font-size: 44rpx; }
   &--lg { width: 144rpx; height: 144rpx; font-size: 60rpx; }
 
-  &--rewind { color: var(--blue); border: 4rpx solid #DBEAFE; }
+  &--rewind { color: var(--blue); border: 4rpx solid #D6E4F5; }
   &--pass { color: var(--red); border: 4rpx solid var(--red-soft); }
   &--swap {
     color: #fff;
-    background: linear-gradient(135deg, var(--accent), #FF7A3D);
-    box-shadow: 0 20rpx 52rpx rgba(232, 87, 42, 0.45);
+    background: linear-gradient(135deg, var(--accent), #3E8E6A);
+    box-shadow: 0 20rpx 52rpx rgba(37, 107, 78, 0.45);
   }
   &--swap-gold {
-    background: linear-gradient(135deg, #F5C14E, #E8A93D 40%, #F7D97E 60%, #D99216);
+    background: linear-gradient(135deg, #D9A838, #C08A1E 40%, #E8C877 60%, #A8760F);
     background-size: 220% 220%;
     animation: shimmer 1s linear infinite;
-    box-shadow: 0 20rpx 60rpx rgba(232, 169, 61, 0.6);
+    box-shadow: 0 20rpx 60rpx rgba(192, 138, 30, 0.6);
   }
   &--like { color: var(--green); border: 4rpx solid var(--green-soft); }
   &--boost { color: var(--purple); border: 4rpx solid var(--purple-soft); }

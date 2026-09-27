@@ -1,5 +1,5 @@
 export default definePageConfig({
   navigationBarTitleText: '愿望单 · 我的发布',
-  navigationBarBackgroundColor: '#F5F0E8',
+  navigationBarBackgroundColor: '#EBE2CE',
   navigationBarTextStyle: 'black'
 })

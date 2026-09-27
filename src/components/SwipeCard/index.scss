@@ -13,8 +13,8 @@
     opacity: 0;
   }
   &--boosted {
-    border: 4rpx solid rgba(232, 87, 42, 0.55);
-    box-shadow: 0 24rpx 68rpx rgba(232, 87, 42, 0.28);
+    border: 4rpx solid rgba(37, 107, 78, 0.55);
+    box-shadow: 0 24rpx 68rpx rgba(37, 107, 78, 0.28);
   }
 
   &__photo {
@@ -53,11 +53,11 @@
     z-index: 3;
     padding: 8rpx 20rpx;
     border-radius: 26rpx;
-    background: linear-gradient(135deg, #E8572A, #FF8A50);
+    background: linear-gradient(135deg, #256B4E, #5AA37F);
     color: #fff;
     font-size: 24rpx;
     font-weight: 700;
-    box-shadow: 0 8rpx 24rpx rgba(232, 87, 42, 0.4);
+    box-shadow: 0 8rpx 24rpx rgba(37, 107, 78, 0.4);
   }
   &__wishbar {
     position: absolute;
@@ -175,9 +175,9 @@
       transform: translate(-50%, -50%) rotate(-12deg);
     }
     &.stamp-no {
-      color: var(--accent);
-      border-color: var(--accent);
-      background: rgba(255, 253, 247, 0.92);
+      color: var(--red);
+      border-color: var(--red);
+      background: rgba(250, 246, 234, 0.92);
       transform: translate(-50%, -50%) rotate(12deg);
     }
   }
@@ -192,6 +192,6 @@
     pointer-events: none;
     z-index: 5;
     &.border-yes { border-color: var(--green); }
-    &.border-no { border-color: var(--accent); }
+    &.border-no { border-color: var(--red); }
   }
 }

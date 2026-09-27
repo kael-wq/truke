@@ -1,5 +1,5 @@
 export default definePageConfig({
   navigationBarTitleText: '换换币充值',
-  navigationBarBackgroundColor: '#F5F0E8',
+  navigationBarBackgroundColor: '#EBE2CE',
   navigationBarTextStyle: 'black'
 })

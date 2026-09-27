@@ -91,7 +91,7 @@
   padding: 6rpx 16rpx;
   border-radius: 16rpx;
   &.status-active { color: var(--green); background: var(--green-soft); }
-  &.status-matched { color: var(--blue); background: #E3EFFB; }
+  &.status-matched { color: var(--blue); background: #DFE8F2; }
   &.status-archived { color: var(--ink-faint); background: var(--bg); }
 }
 .wish-row__swaps {
@@ -128,7 +128,7 @@
 
 .wish-tip {
   margin-top: 32rpx;
-  background: linear-gradient(135deg, #2D2A24, #1a1816);
+  background: linear-gradient(135deg, #2B2417, #1C1710);
   border-radius: 32rpx;
   padding: 28rpx;
   color: #fff;

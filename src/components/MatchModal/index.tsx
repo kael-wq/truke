@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import { useCardStore } from '../../stores/useCardStore'
 import './index.scss'
 
-const CONFETTI_COLORS = ['#E8572A', '#FFB020', '#3DB87A', '#4A90D9', '#9B6BDF', '#FF6B81', '#D4A843']
+const CONFETTI_COLORS = ['#256B4E', '#C08A1E', '#3B8B5C', '#3A6B9E', '#6C5B9E', '#B3432F', '#D9A838']
 
 export default function MatchModal() {
   const lastMatch = useCardStore(s => s.lastMatch)
