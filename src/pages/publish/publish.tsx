@@ -1,5 +1,6 @@
 import { View, Text, Image } from '@tarojs/components'
 import { Input, Switch, Button } from '@nutui/nutui-react-taro'
+import { Close } from '@nutui/icons-react-taro'
 import Taro from '@tarojs/taro'
 import { useState } from 'react'
 import { useCoinStore } from '../../stores/useCoinStore'
@@ -96,7 +97,7 @@ export default function Publish() {
             <View key={i} className="pub-img">
               <Image className="pub-img__inner" src={img} mode="aspectFill" />
               {i === 0 && <Text className="pub-img__cover">封面</Text>}
-              <View className="pub-img__del" onClick={() => removeImage(i)}>✕</View>
+              <View className="pub-img__del" onClick={() => removeImage(i)}><Close size={14} color="#fff" /></View>
             </View>
           ))}
           {images.length < 9 && (

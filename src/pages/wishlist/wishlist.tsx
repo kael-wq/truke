@@ -1,5 +1,6 @@
 import { View, Text, Image } from '@tarojs/components'
 import { Tag } from '@nutui/nutui-react-taro'
+import { Package, Star } from '@nutui/icons-react-taro'
 import Taro, { useLoad } from '@tarojs/taro'
 import { useRef, useState } from 'react'
 import TabBar from '../../components/TabBar'
@@ -55,7 +56,10 @@ export default function Wishlist() {
   return (
     <View className="wishlist-page">
       <View className="wish-head">
-        <Text className="wish-head__title">📦 我的发布</Text>
+        <View className="wish-head__title">
+          <Package size={18} />
+          <Text>我的发布</Text>
+        </View>
         <Text className="wish-head__count">共 {items.length} 件</Text>
       </View>
 
@@ -64,7 +68,10 @@ export default function Wishlist() {
       ))}
 
       <View className="wish-tip">
-        <Text className="wish-tip__title">👑 会员专享</Text>
+        <View className="wish-tip__title">
+          <Star size={16} />
+          <Text>会员专享</Text>
+        </View>
         <Text className="wish-tip__desc">查看谁对你的物品点了「想换」—— 免费用户显示模糊头像，会员可直接查看</Text>
       </View>
 

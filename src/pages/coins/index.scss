@@ -119,10 +119,16 @@
   margin-top: 48rpx;
 }
 .coins-history__title {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
   font-size: 30rpx;
   font-weight: 900;
   margin-bottom: 20rpx;
+}
+.coins-history__title text {
+  font-size: 30rpx;
+  font-weight: 900;
 }
 .coins-tx {
   display: flex;

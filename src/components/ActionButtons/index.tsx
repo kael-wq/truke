@@ -1,4 +1,5 @@
 import { View, Text } from '@tarojs/components'
+import { Undo, Close, ArrowExchange, Heart, DoubleArrowUp } from '@nutui/icons-react-taro'
 import Taro from '@tarojs/taro'
 import { useState } from 'react'
 import { useCardStore } from '../../stores/useCardStore'
@@ -20,7 +21,6 @@ export default function ActionButtons() {
   const [superMode, setSuperMode] = useState(false)
 
   const current = cards[index]
-  const hasCard = !!current
 
   const toast = (title: string, icon: 'none' | 'success' = 'none') => Taro.showToast({ title, icon, duration: 1500 })
 
@@ -45,7 +45,6 @@ export default function ActionButtons() {
 
   const handleLike = () => {
     if (!current) return
-    // 收藏到「我的收藏」
     try {
       const favs = Taro.getStorageSync('swapswap_favs') || []
       if (!favs.find((f: any) => f._id === current._id)) {
@@ -62,7 +61,6 @@ export default function ActionButtons() {
       toast('这张卡已经在曝光中啦 ⚡')
       return
     }
-    // 会员每月 5 次免费 Boost
     if (consumeFreeBoost()) {
       boostLocal(current._id)
       toast('会员免费 Boost 已生效 ⚡', 'success')
@@ -76,18 +74,29 @@ export default function ActionButtons() {
 
   return (
     <View className="action-bar">
-      <View className="abtn abtn--sm abtn--rewind" onClick={handleRewind}>↩</View>
-      <View className="abtn abtn--md abtn--pass" onClick={handlePass}>✕</View>
+      <View className="abtn abtn--sm abtn--rewind" onClick={handleRewind}>
+        <Undo size={20} />
+      </View>
+      <View className="abtn abtn--md abtn--pass" onClick={handlePass}>
+        <Close size={24} />
+      </View>
       <View
         className={`abtn abtn--lg abtn--swap ${superMode ? 'abtn--swap-gold' : ''}`}
         onClick={handleSwap}
-        onLongPress={() => { setSuperMode(true); toast('已切换到超级想换，消耗 3 换换币', 'none') }}
+        onLongPress={() => {
+          setSuperMode(true)
+          toast('已切换到超级想换，消耗 3 换换币', 'none')
+        }}
       >
-        ⇄
+        <ArrowExchange size={32} color="#fff" />
         <Text className="abtn-sub">长按超级想换</Text>
       </View>
-      <View className="abtn abtn--md abtn--like" onClick={handleLike}>♡</View>
-      <View className="abtn abtn--sm abtn--boost" onClick={handleBoost}>⚡</View>
+      <View className="abtn abtn--md abtn--like" onClick={handleLike}>
+        <Heart size={24} />
+      </View>
+      <View className="abtn abtn--sm abtn--boost" onClick={handleBoost}>
+        <DoubleArrowUp size={20} />
+      </View>
     </View>
   )
 }

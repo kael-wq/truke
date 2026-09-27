@@ -1,5 +1,6 @@
 import { View, Text } from '@tarojs/components'
 import { Badge } from '@nutui/nutui-react-taro'
+import { Bell } from '@nutui/icons-react-taro'
 import Taro from '@tarojs/taro'
 import { useState } from 'react'
 import TabBar from '../../components/TabBar'
@@ -22,7 +23,7 @@ export default function Messages() {
     <View className="messages-page">
       {/* 系统通知 */}
       <View className="sys-notice" onClick={() => Taro.showToast({ title: '系统通知', icon: 'none' })}>
-        <Text className="sys-notice__icon">🔔</Text>
+        <Bell className="sys-notice__icon" size={22} color="#E8572A" />
         <View className="sys-notice__body">
           <Text className="sys-notice__title">有人想换你的物品</Text>
           <Text className="sys-notice__desc">🐰 兔兔 想用「泡泡玛特盲盒」换你的「机械键盘」</Text>

@@ -31,8 +31,7 @@
   }
 }
 .tabbar__icon {
-  font-size: 42rpx;
-  line-height: 1;
+  display: block;
 }
 .tabbar__publish-wrap {
   flex: 1;
@@ -52,8 +51,5 @@
   border: 8rpx solid var(--bg);
 }
 .tabbar__plus {
-  color: #fff;
-  font-size: 56rpx;
-  font-weight: 300;
-  line-height: 1;
+  display: block;
 }

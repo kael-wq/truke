@@ -1,5 +1,6 @@
 import { View, Text } from '@tarojs/components'
 import { Cell, Button } from '@nutui/nutui-react-taro'
+import { Orderlist } from '@nutui/icons-react-taro'
 import Taro from '@tarojs/taro'
 import { useCoinStore } from '../../stores/useCoinStore'
 import { COIN_TIERS } from '../../services/payment'
@@ -51,7 +52,10 @@ export default function Coins() {
 
       {/* 交易记录（NutUI Cell）*/}
       <View className="coins-history">
-        <Text className="coins-history__title">📋 交易记录</Text>
+        <View className="coins-history__title">
+          <Orderlist size={18} />
+          <Text>交易记录</Text>
+        </View>
         <Cell.Group>
           {transactions.map(t => (
             <Cell

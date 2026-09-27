@@ -1,5 +1,6 @@
 import { View, Text } from '@tarojs/components'
 import { Popup, Button } from '@nutui/nutui-react-taro'
+import { ArrowExchange } from '@nutui/icons-react-taro'
 import Taro from '@tarojs/taro'
 import { useCardStore } from '../../stores/useCardStore'
 import './index.scss'
@@ -47,7 +48,7 @@ export default function MatchModal() {
             <Text className="m-emoji">{lastMatch?.theirItem.cover}</Text>
             <Text className="m-name">{lastMatch?.theirItem.title}</Text>
           </View>
-          <Text className="match-arrow">⇄</Text>
+          <View className="match-arrow"><ArrowExchange size={24} /></View>
           <View className="match-item match-item--mine">
             <Text className="m-tag">你的</Text>
             <Text className="m-emoji">{lastMatch?.myItem.cover}</Text>

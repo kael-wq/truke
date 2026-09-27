@@ -1,4 +1,5 @@
 import { View, Text, Button } from '@tarojs/components'
+import { ArrowExchange } from '@nutui/icons-react-taro'
 import Taro, { useLoad } from '@tarojs/taro'
 import { useCardStore } from '../../stores/useCardStore'
 import './index.scss'
@@ -44,7 +45,7 @@ export default function MatchPage() {
             <Text className="match-page__emoji">{theirItem?.cover || '🎁'}</Text>
             <Text className="match-page__name">{theirItem?.title || '闲置物品'}</Text>
           </View>
-          <Text className="match-page__arrow">⇄</Text>
+          <View className="match-page__arrow"><ArrowExchange size={24} /></View>
           <View className="match-page__item">
             <Text className="match-page__tag match-page__tag--mine">你的</Text>
             <Text className="match-page__emoji">{myItem?.cover || '🎁'}</Text>

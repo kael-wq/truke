@@ -1,4 +1,5 @@
 import { View, Text } from '@tarojs/components'
+import { ArrowExchange } from '@nutui/icons-react-taro'
 import Taro, { useLoad } from '@tarojs/taro'
 import { useState } from 'react'
 import CardStack from '../../components/CardStack'
@@ -28,7 +29,7 @@ export default function Index() {
       {/* 顶部导航（自定义） */}
       <View className="index-header" style={{ paddingTop: `${statusBarH + 10}px` }}>
         <View className="logo">
-          <Text className="logo-mark">⇄</Text>
+          <View className="logo-mark"><ArrowExchange size={18} /></View>
           <Text className="logo-text">换换</Text>
           <Text className="logo-sub">SwapSwap</Text>
         </View>

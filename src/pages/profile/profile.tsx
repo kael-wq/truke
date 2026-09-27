@@ -1,5 +1,6 @@
 import { View, Text } from '@tarojs/components'
-import { Cell, Button } from '@nutui/nutui-react-taro'
+import { Cell } from '@nutui/nutui-react-taro'
+import { Wallet, Package, Heart, Orderlist, Star, Setting, Service } from '@nutui/icons-react-taro'
 import Taro from '@tarojs/taro'
 import MemberBanner from '../../components/MemberBanner'
 import TabBar from '../../components/TabBar'
@@ -39,13 +40,13 @@ export default function Profile() {
   }
 
   const menu = [
-    { icon: '💰', label: '换换币余额', val: `${balance} 币`, action: () => Taro.navigateTo({ url: '/pages/coins/coins' }) },
-    { icon: '📦', label: '我的发布', val: '', action: () => Taro.redirectTo({ url: '/pages/wishlist/wishlist' }) },
-    { icon: '♡', label: '我的收藏', val: '', action: () => Taro.showToast({ title: '收藏列表', icon: 'none' }) },
-    { icon: '📋', label: '交换记录', val: '', action: () => Taro.showToast({ title: '交换记录', icon: 'none' }) },
-    { icon: '👑', label: '会员状态', val: isMember ? '已开通' : '未开通', action: () => Taro.navigateTo({ url: '/pages/membership/membership' }) },
-    { icon: '⚙️', label: '设置', val: '', action: () => Taro.showToast({ title: '设置', icon: 'none' }) },
-    { icon: '📞', label: '客服', val: '', action: () => Taro.showToast({ title: '客服', icon: 'none' }) }
+    { Icon: Wallet, label: '换换币余额', val: `${balance} 币`, action: () => Taro.navigateTo({ url: '/pages/coins/coins' }) },
+    { Icon: Package, label: '我的发布', val: '', action: () => Taro.redirectTo({ url: '/pages/wishlist/wishlist' }) },
+    { Icon: Heart, label: '我的收藏', val: '', action: () => Taro.showToast({ title: '收藏列表', icon: 'none' }) },
+    { Icon: Orderlist, label: '交换记录', val: '', action: () => Taro.showToast({ title: '交换记录', icon: 'none' }) },
+    { Icon: Star, label: '会员状态', val: isMember ? '已开通' : '未开通', action: () => Taro.navigateTo({ url: '/pages/membership/membership' }) },
+    { Icon: Setting, label: '设置', val: '', action: () => Taro.showToast({ title: '设置', icon: 'none' }) },
+    { Icon: Service, label: '客服', val: '', action: () => Taro.showToast({ title: '客服', icon: 'none' }) }
   ]
 
   return (
@@ -82,7 +83,12 @@ export default function Profile() {
           {menu.map(m => (
             <Cell
               key={m.label}
-              title={`${m.icon}  ${m.label}`}
+              title={
+                <View className="p-menu__title">
+                  <m.Icon className="p-menu__ico" size={18} />
+                  <Text className="p-menu__label">{m.label}</Text>
+                </View>
+              }
               extra={
                 m.val
                   ? <Text className="p-menu__val">{m.val}</Text>

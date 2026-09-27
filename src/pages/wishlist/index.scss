@@ -11,6 +11,13 @@
   margin-bottom: 24rpx;
 }
 .wish-head__title {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 36rpx;
+  font-weight: 900;
+}
+.wish-head__title text {
   font-size: 36rpx;
   font-weight: 900;
 }
@@ -125,7 +132,14 @@
   color: #fff;
 }
 .wish-tip__title {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  font-size: 28rpx;
+  font-weight: 900;
+  color: var(--gold);
+}
+.wish-tip__title text {
   font-size: 28rpx;
   font-weight: 900;
   color: var(--gold);

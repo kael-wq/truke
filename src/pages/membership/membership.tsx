@@ -1,15 +1,16 @@
 import { View, Text } from '@tarojs/components'
 import { Cell, Button } from '@nutui/nutui-react-taro'
+import { DoubleArrowUp, Search, Undo, Star } from '@nutui/icons-react-taro'
 import Taro from '@tarojs/taro'
 import { useUserStore } from '../../stores/useUserStore'
 import { MEMBER_PRICE, subscribeMember } from '../../services/payment'
 import './index.scss'
 
 const BENEFITS = [
-  { icon: '⚡', title: '每月 5 次免费 Boost', desc: '让你的闲置获得更多曝光' },
-  { icon: '👀', title: '看谁想换你', desc: '解锁模糊头像，第一时间知道谁对你感兴趣' },
-  { icon: '↩', title: '无限回退', desc: '手滑错过？随便退，不限次数' },
-  { icon: '👑', title: '专属会员标识', desc: '个人主页金色标识，身份象征' }
+  { Icon: DoubleArrowUp, title: '每月 5 次免费 Boost', desc: '让你的闲置获得更多曝光' },
+  { Icon: Search, title: '看谁想换你', desc: '解锁模糊头像，第一时间知道谁对你感兴趣' },
+  { Icon: Undo, title: '无限回退', desc: '手滑错过？随便退，不限次数' },
+  { Icon: Star, title: '专属会员标识', desc: '个人主页金色标识，身份象征' }
 ]
 
 const COMPARE = [
@@ -40,7 +41,7 @@ export default function Membership() {
   return (
     <View className="membership-page">
       <View className="mem-hero">
-        <Text className="mem-hero__icon">👑</Text>
+        <View className="mem-hero__icon"><Star size={44} color="#C08A1E" /></View>
         <Text className="mem-hero__title">换换会员 Swap Pass</Text>
         <Text className="mem-hero__price">¥{MEMBER_PRICE}<Text className="mem-hero__unit">/月</Text></Text>
         <Text className="mem-hero__sub">让闲置更快流动，交换效率翻倍</Text>
@@ -50,7 +51,16 @@ export default function Membership() {
       <View className="mem-benefits">
         <Cell.Group>
           {BENEFITS.map(b => (
-            <Cell key={b.title} title={`${b.icon}  ${b.title}`} description={b.desc} />
+            <Cell
+              key={b.title}
+              title={
+                <View className="mem-benefit__title">
+                  <b.Icon className="mem-benefit__ico" size={18} />
+                  <Text>{b.title}</Text>
+                </View>
+              }
+              description={b.desc}
+            />
           ))}
         </Cell.Group>
       </View>

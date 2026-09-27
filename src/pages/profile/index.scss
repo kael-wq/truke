@@ -109,17 +109,16 @@
 .p-menu__item:last-child {
   border-bottom: none;
 }
-.p-menu__ico {
-  width: 64rpx;
-  height: 64rpx;
-  border-radius: 20rpx;
+.p-menu__title {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 30rpx;
+  gap: 14rpx;
+}
+.p-menu__ico {
+  color: var(--accent);
+  flex: none;
 }
 .p-menu__label {
-  flex: 1;
   font-size: 28rpx;
   font-weight: 700;
 }
