@@ -17,7 +17,8 @@ const baseConfig = {
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
-  plugins: ['@tarojs/plugin-sass'],
+  // plugin-html：让小程序支持 NutUI 用到的 HTML 标签（div/i 等），生成对应模板
+  plugins: ['@tarojs/plugin-sass', '@tarojs/plugin-html'],
   defineConstants: {},
   copy: {
     patterns: [],
