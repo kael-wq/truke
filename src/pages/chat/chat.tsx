@@ -1,4 +1,5 @@
-import { View, Text, Input, Button } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
+import { Input, Button } from '@nutui/nutui-react-taro'
 import Taro, { useRouter } from '@tarojs/taro'
 import { useState } from 'react'
 import { Message } from '../../types'
@@ -22,7 +23,6 @@ export default function Chat() {
     if (!text) return
     setMessages([...messages, { _id: String(Date.now()), from: 'me', type: 'text', content: text, time: '刚刚' }])
     setInput('')
-    // 模拟对方回复
     setTimeout(() => {
       setMessages(prev => [...prev, { _id: String(Date.now() + 1), from: 'peer', type: 'text', content: '收到，我们详聊～', time: '刚刚' }])
     }, 1200)
@@ -46,7 +46,7 @@ export default function Chat() {
         <Text className="chat-trade__item">你的物品</Text>
         <Text className="chat-trade__arrow">⇄</Text>
         <Text className="chat-trade__item">{item}</Text>
-        <Button className="chat-trade__btn" onClick={confirmTrade}>确认交换</Button>
+        <Button type="primary" size="small" onClick={confirmTrade}>确认交换</Button>
       </View>
 
       <View className="chat-scroll">
@@ -60,8 +60,15 @@ export default function Chat() {
       </View>
 
       <View className="chat-inputbar">
-        <Input className="chat-input" value={input} placeholder="输入消息（仅文字/图片）" confirm-type="send" onInput={e => setInput(e.detail.value)} onConfirm={send} />
-        <Button className="chat-send" onClick={send}>发送</Button>
+        <Input
+          className="chat-input"
+          value={input}
+          placeholder="输入消息（仅文字/图片）"
+          confirmType="send"
+          onChange={setInput}
+          onConfirm={send}
+        />
+        <Button type="primary" size="small" onClick={send}>发送</Button>
       </View>
     </View>
   )

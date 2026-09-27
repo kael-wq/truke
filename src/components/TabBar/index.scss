@@ -34,25 +34,6 @@
   font-size: 42rpx;
   line-height: 1;
 }
-.tabbar__badge {
-  position: absolute;
-  top: -4rpx;
-  right: 50%;
-  transform: translateX(34rpx);
-  min-width: 32rpx;
-  height: 32rpx;
-  background: var(--red);
-  color: #fff;
-  font-size: 20rpx;
-  font-weight: 900;
-  border-radius: 16rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 8rpx;
-  border: 4rpx solid var(--card);
-}
-
 .tabbar__publish-wrap {
   flex: 1;
   display: flex;

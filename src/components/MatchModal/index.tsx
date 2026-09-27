@@ -1,4 +1,5 @@
-import { View, Text, Button } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
+import { Popup, Button } from '@nutui/nutui-react-taro'
 import Taro from '@tarojs/taro'
 import { useCardStore } from '../../stores/useCardStore'
 import './index.scss'
@@ -9,8 +10,6 @@ export default function MatchModal() {
   const lastMatch = useCardStore(s => s.lastMatch)
   const clearMatch = useCardStore(s => s.clearMatch)
 
-  if (!lastMatch) return null
-
   const confetti = Array.from({ length: 24 }, (_, i) => i)
 
   const goChat = () => {
@@ -19,7 +18,13 @@ export default function MatchModal() {
   }
 
   return (
-    <View className="match-backdrop">
+    <Popup
+      visible={!!lastMatch}
+      position="center"
+      round
+      onClose={clearMatch}
+      className="match-popup"
+    >
       <View className="match-modal">
         {confetti.map(i => (
           <View
@@ -39,22 +44,22 @@ export default function MatchModal() {
         <View className="match-items">
           <View className="match-item">
             <Text className="m-tag">TA 的</Text>
-            <Text className="m-emoji">{lastMatch.theirItem.cover}</Text>
-            <Text className="m-name">{lastMatch.theirItem.title}</Text>
+            <Text className="m-emoji">{lastMatch?.theirItem.cover}</Text>
+            <Text className="m-name">{lastMatch?.theirItem.title}</Text>
           </View>
           <Text className="match-arrow">⇄</Text>
           <View className="match-item match-item--mine">
             <Text className="m-tag">你的</Text>
-            <Text className="m-emoji">{lastMatch.myItem.cover}</Text>
-            <Text className="m-name">{lastMatch.myItem.title}</Text>
+            <Text className="m-emoji">{lastMatch?.myItem.cover}</Text>
+            <Text className="m-name">{lastMatch?.myItem.title}</Text>
           </View>
         </View>
 
         <View className="match-cta">
-          <Button className="cta-chat" onClick={goChat}>去聊聊</Button>
-          <Button className="cta-browse" onClick={clearMatch}>继续浏览</Button>
+          <Button type="primary" onClick={goChat}>去聊聊</Button>
+          <Button onClick={clearMatch}>继续浏览</Button>
         </View>
       </View>
-    </View>
+    </Popup>
   )
 }

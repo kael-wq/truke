@@ -28,6 +28,24 @@ page {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ============ NutUI 主题覆盖（换肤到品牌绿）============ */
+page {
+  --nutui-color-primary: #256B4E;
+  --nutui-color-primary-stop-1: #256B4E;
+  --nutui-color-primary-stop-2: #2E7D5B;
+  --nutui-color-primary-pressed: #175038;
+  --nutui-color-primary-disabled: #8FBBA6;
+  --nutui-color-primary-light: #DCE9DE;
+  --nutui-color-primary-text: #FFFFFF;
+  --nutui-color-success: #3B8B5C;
+  --nutui-color-danger: #B3432F;
+  --nutui-color-warning: #C08A1E;
+  --nutui-gray-7: #2B2417;
+  --nutui-gray-6: #7A6E58;
+  --nutui-gray-5: #A89A7D;
+  --nutui-font-family: inherit;
+}
+
 view, text, input, textarea, button, image {
   box-sizing: border-box;
 }

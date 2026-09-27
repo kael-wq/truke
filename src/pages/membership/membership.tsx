@@ -1,4 +1,5 @@
-import { View, Text, Button } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
+import { Cell, Button } from '@nutui/nutui-react-taro'
 import Taro from '@tarojs/taro'
 import { useUserStore } from '../../stores/useUserStore'
 import { MEMBER_PRICE, subscribeMember } from '../../services/payment'
@@ -45,16 +46,13 @@ export default function Membership() {
         <Text className="mem-hero__sub">让闲置更快流动，交换效率翻倍</Text>
       </View>
 
+      {/* 权益（NutUI Cell）*/}
       <View className="mem-benefits">
-        {BENEFITS.map(b => (
-          <View key={b.title} className="mem-benefit">
-            <Text className="mem-benefit__icon">{b.icon}</Text>
-            <View className="mem-benefit__info">
-              <Text className="mem-benefit__title">{b.title}</Text>
-              <Text className="mem-benefit__desc">{b.desc}</Text>
-            </View>
-          </View>
-        ))}
+        <Cell.Group>
+          {BENEFITS.map(b => (
+            <Cell key={b.title} title={`${b.icon}  ${b.title}`} description={b.desc} />
+          ))}
+        </Cell.Group>
       </View>
 
       <View className="mem-compare">
@@ -72,7 +70,7 @@ export default function Membership() {
         ))}
       </View>
 
-      <Button className="mem-cta" onClick={open}>
+      <Button type="warning" size="large" block onClick={open}>
         {isMember ? '已开通 ✓' : `¥${MEMBER_PRICE} 立即开通`}
       </Button>
       <Text className="mem-note">虚拟会员仅用于演示 · 可随时取消</Text>

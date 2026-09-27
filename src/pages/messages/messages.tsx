@@ -1,4 +1,5 @@
 import { View, Text } from '@tarojs/components'
+import { Badge } from '@nutui/nutui-react-taro'
 import Taro from '@tarojs/taro'
 import { useState } from 'react'
 import TabBar from '../../components/TabBar'
@@ -11,8 +12,10 @@ export default function Messages() {
   const unread = convos.filter(c => c.unread > 0).length
 
   const openChat = (c: Conversation) => {
-    setConvos(prev => prev.map(x => x._id === c._id ? { ...x, unread: 0 } : x))
-    Taro.navigateTo({ url: `/pages/chat/chat?peer=${encodeURIComponent(c.peer.nickname)}&emoji=${encodeURIComponent(c.peer.emoji)}&item=${encodeURIComponent(c.theirItemTitle)}` })
+    setConvos(prev => prev.map(x => (x._id === c._id ? { ...x, unread: 0 } : x)))
+    Taro.navigateTo({
+      url: `/pages/chat/chat?peer=${encodeURIComponent(c.peer.nickname)}&emoji=${encodeURIComponent(c.peer.emoji)}&item=${encodeURIComponent(c.theirItemTitle)}`
+    })
   }
 
   return (
@@ -34,10 +37,19 @@ export default function Messages() {
 
       {convos.map(c => (
         <View key={c._id} className="convo" onClick={() => openChat(c)}>
-          <View className="convo__avatar">
-            <Text className="convo__item">🎁</Text>
-            <Text className="convo__emoji">{c.peer.emoji}</Text>
-          </View>
+          {c.unread > 0 ? (
+            <Badge value={c.unread}>
+              <View className="convo__avatar">
+                <Text className="convo__item">🎁</Text>
+                <Text className="convo__emoji">{c.peer.emoji}</Text>
+              </View>
+            </Badge>
+          ) : (
+            <View className="convo__avatar">
+              <Text className="convo__item">🎁</Text>
+              <Text className="convo__emoji">{c.peer.emoji}</Text>
+            </View>
+          )}
           <View className="convo__body">
             <View className="convo__top">
               <Text className="convo__name">{c.peer.nickname}</Text>
@@ -46,7 +58,6 @@ export default function Messages() {
             <Text className="convo__exchange">⇄ 你的「{c.myItemTitle}」换 TA 的「{c.theirItemTitle}」</Text>
             <Text className="convo__msg">{c.lastMessage}</Text>
           </View>
-          {c.unread > 0 && <Text className="convo__unread">{c.unread}</Text>}
         </View>
       ))}
 

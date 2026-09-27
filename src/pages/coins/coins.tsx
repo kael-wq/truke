@@ -1,4 +1,5 @@
-import { View, Text, Button } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
+import { Cell, Button } from '@nutui/nutui-react-taro'
 import Taro from '@tarojs/taro'
 import { useCoinStore } from '../../stores/useCoinStore'
 import { COIN_TIERS } from '../../services/payment'
@@ -46,21 +47,25 @@ export default function Coins() {
         <View className={`coins-pay__method ${selectedPay === 'alipay' ? 'coins-pay__method--sel' : ''}`} onClick={() => setSelectedPay('alipay')}>🔵 支付宝</View>
       </View>
 
-      <Button className="coins-cta" onClick={doRecharge}>立即充值</Button>
+      <Button type="primary" size="large" block onClick={doRecharge}>立即充值</Button>
 
+      {/* 交易记录（NutUI Cell）*/}
       <View className="coins-history">
         <Text className="coins-history__title">📋 交易记录</Text>
-        {transactions.map(t => (
-          <View key={t._id} className="coins-tx">
-            <View className="coins-tx__info">
-              <Text className="coins-tx__reason">{t.reason}</Text>
-              <Text className="coins-tx__time">{t.time}</Text>
-            </View>
-            <Text className={`coins-tx__amount ${t.type === 'earn' ? 'earn' : 'spend'}`}>
-              {t.type === 'earn' ? '+' : '-'}{t.amount}
-            </Text>
-          </View>
-        ))}
+        <Cell.Group>
+          {transactions.map(t => (
+            <Cell
+              key={t._id}
+              title={t.reason}
+              description={t.time}
+              extra={
+                <Text className={`coins-tx__amount ${t.type === 'earn' ? 'earn' : 'spend'}`}>
+                  {t.type === 'earn' ? '+' : '-'}{t.amount}
+                </Text>
+              }
+            />
+          ))}
+        </Cell.Group>
       </View>
     </View>
   )

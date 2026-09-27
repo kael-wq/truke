@@ -1,4 +1,5 @@
-import { View, Text, Button } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
+import { Button } from '@nutui/nutui-react-taro'
 import Taro from '@tarojs/taro'
 import { useUserStore } from '../../stores/useUserStore'
 import { MEMBER_PRICE } from '../../services/payment'
@@ -16,7 +17,13 @@ export default function MemberBanner() {
           <Text className="mb-title">👑 换换会员 Swap Pass</Text>
           <Text className="mb-price">¥{MEMBER_PRICE}/月 · 随时取消</Text>
         </View>
-        <Button className="mb-cta" onClick={isMember ? undefined : goMembership}>
+        <Button
+          className="mb-cta"
+          type="primary"
+          size="small"
+          disabled={isMember}
+          onClick={goMembership}
+        >
           {isMember ? '已开通 ✓' : '开通会员'}
         </Button>
       </View>

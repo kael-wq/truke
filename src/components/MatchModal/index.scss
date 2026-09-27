@@ -1,19 +1,6 @@
-.match-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 200;
-  background: rgba(24, 20, 15, 0.72);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 48rpx;
-}
-
+/* 外层交给 NutUI <Popup position="center"> */
 .match-modal {
-  width: 100%;
+  width: 640rpx;
   max-width: 640rpx;
   background: var(--card);
   border-radius: 56rpx;
@@ -21,12 +8,6 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  animation: popIn 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
-}
-
-@keyframes popIn {
-  from { opacity: 0; transform: scale(0.7) translateY(60rpx); }
-  to { opacity: 1; transform: none; }
 }
 
 .match-title {
@@ -105,24 +86,8 @@
   display: flex;
   gap: 20rpx;
 }
-.match-cta button {
+.match-cta .nut-button {
   flex: 1;
-  padding: 28rpx 0;
-  border-radius: 32rpx;
-  font-size: 30rpx;
-  font-weight: 900;
-  letter-spacing: 2rpx;
-}
-.match-cta button::after {
-  border: none;
-}
-.cta-chat {
-  background: linear-gradient(135deg, var(--accent), #3E8E6A);
-  color: #fff;
-}
-.cta-browse {
-  background: var(--bg);
-  color: var(--ink);
 }
 
 .match-confetti {

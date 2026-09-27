@@ -1,4 +1,5 @@
 import { View, Text } from '@tarojs/components'
+import { Badge } from '@nutui/nutui-react-taro'
 import Taro from '@tarojs/taro'
 import './index.scss'
 
@@ -37,9 +38,14 @@ export default function TabBar({ current, msgBadge = 0 }: TabBarProps) {
           className={`tabbar__item ${current === t.key ? 'tabbar__item--active' : ''}`}
           onClick={() => navigate(t.url)}
         >
-          <Text className="tabbar__icon">{t.icon}</Text>
+          {t.key === 'messages' && msgBadge > 0 ? (
+            <Badge value={msgBadge}>
+              <Text className="tabbar__icon">{t.icon}</Text>
+            </Badge>
+          ) : (
+            <Text className="tabbar__icon">{t.icon}</Text>
+          )}
           <Text className="tabbar__label">{t.label}</Text>
-          {t.key === 'messages' && msgBadge > 0 && <Text className="tabbar__badge">{msgBadge}</Text>}
         </View>
       ))}
 

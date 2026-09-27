@@ -7,7 +7,8 @@ import prodConfig from './prod'
 const baseConfig = {
   projectName: 'swapswap',
   date: '2024-1-1',
-  designWidth: 750,
+  // NutUI 设计稿基准为 375；自有样式全部用 rpx，不受此值影响
+  designWidth: 375,
   deviceRatio: {
     640: 2.34 / 2,
     750: 1,
@@ -28,6 +29,10 @@ const baseConfig = {
     enable: false
   },
   mini: {
+    // NutUI 图标样式与各页面 SCSS 的引入顺序会引起冲突警告，忽略之
+    miniCssExtractPluginOption: {
+      ignoreOrder: true
+    },
     postcss: {
       pxtransform: {
         enable: true,

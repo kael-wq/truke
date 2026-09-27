@@ -1,4 +1,5 @@
-import { View, Text, Input, Button, Image } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
+import { Input, Switch, Button } from '@nutui/nutui-react-taro'
 import Taro from '@tarojs/taro'
 import { useState } from 'react'
 import { useCoinStore } from '../../stores/useCoinStore'
@@ -30,11 +31,7 @@ export default function Publish() {
       .catch(() => {})
   }
 
-  const removeImage = (idx: number) => {
-    setImages(images.filter((_, i) => i !== idx))
-  }
-
-  const togglePin = () => setPin(!pin)
+  const removeImage = (idx: number) => setImages(images.filter((_, i) => i !== idx))
 
   async function uploadImages(paths: string[]): Promise<string[]> {
     if (!Taro.cloud) return paths
@@ -58,10 +55,9 @@ export default function Publish() {
       Taro.showToast({ title: '先给物品起个名字吧', icon: 'none' })
       return
     }
-    // 置顶发布：消耗 5 换换币
     if (pin) {
       const ok = useCoinStore.getState().spend(5)
-      if (!ok) return // 余额不足时 spend 内部已弹充值框
+      if (!ok) return
     }
 
     Taro.showLoading({ title: '发布中...' })
@@ -80,9 +76,7 @@ export default function Publish() {
       }
       try {
         await callCloud('saveItem', payload)
-      } catch (e) {
-        // 未配置云环境时静默跳过
-      }
+      } catch (e) {}
       Taro.hideLoading()
       Taro.showToast({ title: pin ? '📌 已置顶发布' : '发布成功 🎉', icon: 'success' })
       setTimeout(() => Taro.navigateBack(), 1200)
@@ -106,7 +100,10 @@ export default function Publish() {
             </View>
           ))}
           {images.length < 9 && (
-            <View className="pub-add" onClick={chooseImages}><Text className="pub-add__plus">＋</Text><Text className="pub-add__text">添加</Text></View>
+            <View className="pub-add" onClick={chooseImages}>
+              <Text className="pub-add__plus">＋</Text>
+              <Text className="pub-add__text">添加</Text>
+            </View>
           )}
         </View>
       </View>
@@ -114,7 +111,7 @@ export default function Publish() {
       {/* 标题 */}
       <View className="pub-section">
         <Text className="pub-label">物品名称</Text>
-        <Input className="pub-input" value={title} maxlength={30} placeholder="例如：罗技 G613 机械键盘" onInput={e => setTitle(e.detail.value)} />
+        <Input className="pub-input" value={title} maxLength={30} placeholder="例如：罗技 G613 机械键盘" onChange={setTitle} />
       </View>
 
       {/* 分类 */}
@@ -140,28 +137,28 @@ export default function Publish() {
       {/* 想换 */}
       <View className="pub-section">
         <Text className="pub-label">我想换（愿望）</Text>
-        <Input className="pub-input" value={wish} maxlength={30} placeholder="例如：Switch 游戏机 / 蓝牙音箱" onInput={e => setWish(e.detail.value)} />
+        <Input className="pub-input" value={wish} maxLength={30} placeholder="例如：Switch 游戏机 / 蓝牙音箱" onChange={setWish} />
       </View>
 
       {/* 参考价 */}
       <View className="pub-section">
         <Text className="pub-label">参考价（可选）</Text>
-        <Input className="pub-input" value={priceRef} maxlength={20} placeholder="原购买价，帮助对方判断价值" onInput={e => setPriceRef(e.detail.value)} />
+        <Input className="pub-input" value={priceRef} maxLength={20} placeholder="原购买价，帮助对方判断价值" onChange={setPriceRef} />
       </View>
 
       {/* 置顶 */}
       <View className="pub-section">
-        <View className="pin-row" onClick={togglePin}>
+        <View className="pin-row">
           <View className="pin-info">
             <Text className="pin-title">📌 置顶发布 7 天</Text>
             <Text className="pin-sub">置顶物品在分类信息流中排在最前</Text>
             <Text className="pin-cost">消耗 5 换换币</Text>
           </View>
-          <View className={`switch ${pin ? 'switch--on' : ''}`}><View className="switch__knob" /></View>
+          <Switch checked={pin} onChange={setPin} />
         </View>
       </View>
 
-      <Button className="pub-submit" onClick={submit}>发布 · 换换</Button>
+      <Button type="primary" size="large" block onClick={submit}>发布 · 换换</Button>
     </View>
   )
 }

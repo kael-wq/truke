@@ -1,4 +1,5 @@
 import { View, Text, Image } from '@tarojs/components'
+import { Tag } from '@nutui/nutui-react-taro'
 import Taro, { useLoad } from '@tarojs/taro'
 import { useRef, useState } from 'react'
 import TabBar from '../../components/TabBar'
@@ -13,6 +14,12 @@ const STATUS_TEXT: Record<ItemStatus, string> = {
   archived: '已下架'
 }
 
+const STATUS_TYPE: Record<ItemStatus, 'success' | 'primary' | 'default'> = {
+  active: 'success',
+  matched: 'primary',
+  archived: 'default'
+}
+
 export default function Wishlist() {
   const [items, setItems] = useState<CardItem[]>([])
   const [whoWants, setWhoWants] = useState<Record<string, string[]>>({})
@@ -20,15 +27,11 @@ export default function Wishlist() {
   useLoad(async () => {
     try {
       const list = await fetchMyItems()
-      if (list.length) setItems(list)
-      else setItems(MY_PUBLISHED)
+      setItems(list.length ? list : MY_PUBLISHED)
     } catch (e) {
       setItems(MY_PUBLISHED)
     }
-    setWhoWants({
-      p1: ['🐱', '🐻', '🐰'],
-      p2: ['🦉', '🐼']
-    })
+    setWhoWants({ p1: ['🐱', '🐻', '🐰'], p2: ['🦉', '🐼'] })
   })
 
   const manage = (item: CardItem) => {
@@ -36,11 +39,15 @@ export default function Wishlist() {
       itemList: item.status === 'active' ? ['标记为已换出', '下架'] : ['重新上架', '删除'],
       success: res => {
         const idx = res.tapIndex
-        setItems(prev => prev.map(it => {
-          if (it._id !== item._id) return it
-          if (item.status === 'active') return { ...it, status: idx === 0 ? 'matched' : 'archived' }
-          return { ...it, status: idx === 0 ? 'active' : it.status }
-        }).filter(it => !(item.status !== 'active' && idx === 1 && it._id === item._id)))
+        setItems(prev =>
+          prev
+            .map(it => {
+              if (it._id !== item._id) return it
+              if (item.status === 'active') return { ...it, status: idx === 0 ? 'matched' : 'archived' }
+              return { ...it, status: idx === 0 ? 'active' : it.status }
+            })
+            .filter(it => !(item.status !== 'active' && idx === 1 && it._id === item._id))
+        )
       }
     })
   }
@@ -78,8 +85,6 @@ function WishRow({ item, whoWants, onManage }: { item: CardItem; whoWants: strin
   }
   const onEnd = () => setDx(dx < -80 ? -180 : 0)
 
-  const statusCls = item.status === 'active' ? 'status-active' : item.status === 'matched' ? 'status-matched' : 'status-archived'
-
   return (
     <View className="wish-row-wrap">
       <View className="wish-row__del" onClick={onManage}>删除</View>
@@ -89,7 +94,7 @@ function WishRow({ item, whoWants, onManage }: { item: CardItem; whoWants: strin
         onTouchStart={onStart}
         onTouchMove={onMove}
         onTouchEnd={onEnd}
-        onClick={() => dx < 0 ? setDx(0) : onManage()}
+        onClick={() => (dx < 0 ? setDx(0) : onManage())}
       >
         <View className="wish-row__thumb">
           {item.cover.startsWith('http') || item.cover.startsWith('cloud') ? (
@@ -101,7 +106,7 @@ function WishRow({ item, whoWants, onManage }: { item: CardItem; whoWants: strin
         <View className="wish-row__body">
           <Text className="wish-row__title">{item.title}</Text>
           <View className="wish-row__meta">
-            <Text className={`wish-row__status ${statusCls}`}>{STATUS_TEXT[item.status]}</Text>
+            <Tag type={STATUS_TYPE[item.status]}>{STATUS_TEXT[item.status]}</Tag>
             <Text className="wish-row__swaps">🔥 {whoWants.length} 人想换</Text>
           </View>
           {whoWants.length > 0 && (

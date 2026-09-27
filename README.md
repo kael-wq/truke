@@ -9,8 +9,9 @@ Tinder 的交互，但换的是「闲置物品」而不是人。Taro 3.x + React
 ## 技术栈
 
 - **框架**：Taro 3.6（React 18 + TypeScript + Webpack5）
+- **UI 库**：NutUI React Taro 2.7（`@nutui/nutui-react-taro`）
 - **状态**：Zustand
-- **样式**：SCSS（设计稿 750 宽，1px = 1rpx）
+- **样式**：SCSS（自有样式全用 rpx；`designWidth=375` 以适配 NutUI）
 - **后端**：微信云开发（云函数 + 云数据库 + 云存储）
 - **动画**：CSS transition / keyframes + Taro 触摸事件
 
