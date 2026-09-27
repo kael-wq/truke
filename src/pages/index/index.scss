@@ -1,0 +1,99 @@
+.index-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.index-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+  padding-bottom: 8rpx;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+.logo-mark {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 20rpx;
+  background: linear-gradient(135deg, var(--accent), #FF8A50);
+  color: #fff;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 20rpx rgba(232, 87, 42, 0.35);
+  transform: rotate(-4deg);
+}
+.logo-text {
+  font-size: 44rpx;
+  font-weight: 900;
+}
+.logo-sub {
+  font-size: 22rpx;
+  color: var(--ink-faint);
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+.icon-btn {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  box-shadow: 0 6rpx 18rpx rgba(93, 72, 45, 0.12);
+  position: relative;
+}
+.icon-dot {
+  position: absolute;
+  top: 14rpx;
+  right: 14rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: var(--red);
+  border: 4rpx solid var(--card);
+}
+.coin-pill {
+  display: flex;
+  align-items: center;
+  height: 72rpx;
+  padding: 0 24rpx;
+  border-radius: 36rpx;
+  background: var(--card);
+  box-shadow: 0 6rpx 18rpx rgba(93, 72, 45, 0.12);
+  font-size: 26rpx;
+  font-weight: 800;
+}
+.coin-pill--shake {
+  animation: shake 0.5s;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-10rpx); }
+  40% { transform: translateX(10rpx); }
+  60% { transform: translateX(-8rpx); }
+  80% { transform: translateX(8rpx); }
+}
+
+.index-stack-wrap {
+  flex: 1;
+  position: relative;
+  margin: 8rpx 32rpx 0;
+  overflow: hidden;
+}

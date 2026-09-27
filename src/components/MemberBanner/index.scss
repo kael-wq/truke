@@ -1,0 +1,72 @@
+.member-banner {
+  position: relative;
+  border-radius: 44rpx;
+  padding: 36rpx 32rpx;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2D2A24, #1a1816);
+  color: #fff;
+  border: 2rpx solid rgba(212, 168, 67, 0.5);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(212, 168, 67, 0.18), transparent 60%);
+  }
+}
+
+.mb-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+.mb-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+.mb-title {
+  font-size: 34rpx;
+  font-weight: 900;
+  color: var(--gold);
+}
+.mb-price {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+}
+.mb-cta {
+  background: linear-gradient(135deg, #F5C14E, #E8A93D);
+  color: #4A3505;
+  font-size: 26rpx;
+  font-weight: 900;
+  padding: 18rpx 36rpx;
+  border-radius: 26rpx;
+  box-shadow: 0 12rpx 32rpx rgba(232, 169, 61, 0.35);
+  line-height: 1.4;
+}
+.mb-cta::after {
+  border: none;
+}
+
+.mb-benefits {
+  margin-top: 28rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+  position: relative;
+  z-index: 2;
+}
+.mb-benefits text {
+  font-size: 22rpx;
+  font-weight: 700;
+  background: rgba(212, 168, 67, 0.14);
+  color: #F5D98A;
+  padding: 8rpx 20rpx;
+  border-radius: 18rpx;
+}

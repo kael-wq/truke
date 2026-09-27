@@ -1,0 +1,54 @@
+.action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24rpx;
+  padding: 20rpx 32rpx 24rpx;
+}
+
+.abtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--card);
+  box-shadow: 0 12rpx 34rpx rgba(93, 72, 45, 0.14);
+  position: relative;
+
+  &--sm { width: 96rpx; height: 96rpx; font-size: 36rpx; }
+  &--md { width: 116rpx; height: 116rpx; font-size: 44rpx; }
+  &--lg { width: 144rpx; height: 144rpx; font-size: 60rpx; }
+
+  &--rewind { color: var(--blue); border: 4rpx solid #DBEAFE; }
+  &--pass { color: var(--red); border: 4rpx solid var(--red-soft); }
+  &--swap {
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), #FF7A3D);
+    box-shadow: 0 20rpx 52rpx rgba(232, 87, 42, 0.45);
+  }
+  &--swap-gold {
+    background: linear-gradient(135deg, #F5C14E, #E8A93D 40%, #F7D97E 60%, #D99216);
+    background-size: 220% 220%;
+    animation: shimmer 1s linear infinite;
+    box-shadow: 0 20rpx 60rpx rgba(232, 169, 61, 0.6);
+  }
+  &--like { color: var(--green); border: 4rpx solid var(--green-soft); }
+  &--boost { color: var(--purple); border: 4rpx solid var(--purple-soft); }
+}
+
+.abtn-sub {
+  position: absolute;
+  bottom: -34rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20rpx;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  letter-spacing: 1rpx;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}

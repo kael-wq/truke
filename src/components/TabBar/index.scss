@@ -1,0 +1,78 @@
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  background: var(--card);
+  padding: 12rpx 16rpx;
+  padding-bottom: calc(12rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -8rpx 40rpx rgba(93, 72, 45, 0.08);
+  border-top: 2rpx solid var(--line);
+}
+
+.tabbar__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+  color: var(--ink-faint);
+  font-size: 21rpx;
+  font-weight: 700;
+  position: relative;
+  transition: color 0.2s;
+
+  &--active {
+    color: var(--ink);
+  }
+}
+.tabbar__icon {
+  font-size: 42rpx;
+  line-height: 1;
+}
+.tabbar__badge {
+  position: absolute;
+  top: -4rpx;
+  right: 50%;
+  transform: translateX(34rpx);
+  min-width: 32rpx;
+  height: 32rpx;
+  background: var(--red);
+  color: #fff;
+  font-size: 20rpx;
+  font-weight: 900;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8rpx;
+  border: 4rpx solid var(--card);
+}
+
+.tabbar__publish-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: -50rpx;
+}
+.tabbar__publish {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #FF7A3D);
+  box-shadow: 0 16rpx 44rpx rgba(232, 87, 42, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 8rpx solid var(--bg);
+}
+.tabbar__plus {
+  color: #fff;
+  font-size: 56rpx;
+  font-weight: 300;
+  line-height: 1;
+}

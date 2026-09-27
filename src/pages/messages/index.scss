@@ -1,0 +1,146 @@
+.messages-page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 24rpx 32rpx;
+}
+
+.sys-notice {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  background: var(--accent-soft);
+  border-radius: 28rpx;
+  padding: 24rpx;
+  margin-bottom: 32rpx;
+}
+.sys-notice__icon {
+  font-size: 44rpx;
+}
+.sys-notice__body {
+  flex: 1;
+  min-width: 0;
+}
+.sys-notice__title {
+  font-size: 26rpx;
+  font-weight: 900;
+  color: var(--accent-dark);
+  display: block;
+}
+.sys-notice__desc {
+  font-size: 22rpx;
+  color: var(--ink-soft);
+  margin-top: 6rpx;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sys-notice__time {
+  font-size: 20rpx;
+  color: var(--ink-faint);
+  flex: none;
+}
+
+.msg-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.msg-head__title {
+  font-size: 34rpx;
+  font-weight: 900;
+}
+.msg-head__count {
+  font-size: 24rpx;
+  color: var(--ink-faint);
+  font-weight: 700;
+}
+
+.convo {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  background: var(--card);
+  border-radius: 32rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 6rpx 24rpx rgba(93, 72, 45, 0.08);
+}
+.convo__avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 28rpx;
+  background: var(--bg-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: none;
+}
+.convo__item {
+  font-size: 48rpx;
+}
+.convo__emoji {
+  position: absolute;
+  bottom: -8rpx;
+  right: -8rpx;
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+.convo__body {
+  flex: 1;
+  min-width: 0;
+}
+.convo__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.convo__name {
+  font-size: 29rpx;
+  font-weight: 900;
+}
+.convo__time {
+  font-size: 22rpx;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+.convo__exchange {
+  font-size: 22rpx;
+  color: var(--accent);
+  font-weight: 700;
+  margin-top: 8rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.convo__msg {
+  font-size: 24rpx;
+  color: var(--ink-soft);
+  margin-top: 6rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.convo__unread {
+  min-width: 36rpx;
+  height: 36rpx;
+  border-radius: 18rpx;
+  background: var(--red);
+  color: #fff;
+  font-size: 22rpx;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10rpx;
+  flex: none;
+}

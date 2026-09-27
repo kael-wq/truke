@@ -1,0 +1,117 @@
+.chat-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.chat-trade {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  background: var(--card);
+  margin: 20rpx 32rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 28rpx;
+  box-shadow: 0 6rpx 20rpx rgba(93, 72, 45, 0.08);
+}
+.chat-trade__item {
+  flex: 1;
+  font-size: 24rpx;
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.3;
+}
+.chat-trade__arrow {
+  font-size: 36rpx;
+  color: var(--accent);
+  font-weight: 900;
+  flex: none;
+}
+.chat-trade__btn {
+  background: linear-gradient(135deg, var(--accent), #FF7A3D);
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 900;
+  padding: 14rpx 24rpx;
+  border-radius: 22rpx;
+  line-height: 1.4;
+  flex: none;
+}
+.chat-trade__btn::after {
+  border: none;
+}
+
+.chat-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16rpx 32rpx 24rpx;
+}
+
+.msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  margin-bottom: 28rpx;
+
+  &--me {
+    justify-content: flex-end;
+  }
+}
+.msg__avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  flex: none;
+}
+.msg__bubble {
+  max-width: 70%;
+  padding: 20rpx 24rpx;
+  border-radius: 24rpx;
+  background: var(--card);
+  box-shadow: 0 4rpx 14rpx rgba(93, 72, 45, 0.06);
+}
+.msg--me .msg__bubble {
+  background: var(--accent);
+}
+.msg--me .msg__text {
+  color: #fff;
+}
+.msg__text {
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.chat-inputbar {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx 32rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  background: var(--card);
+  border-top: 2rpx solid var(--line);
+}
+.chat-input {
+  flex: 1;
+  padding: 20rpx 24rpx;
+  border-radius: 28rpx;
+  background: var(--bg);
+  font-size: 28rpx;
+}
+.chat-send {
+  background: var(--accent);
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: 900;
+  padding: 20rpx 32rpx;
+  border-radius: 28rpx;
+  line-height: 1.4;
+}
+.chat-send::after {
+  border: none;
+}

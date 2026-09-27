@@ -1,0 +1,37 @@
+.card-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &__slot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: transform 0.3s ease;
+  }
+
+  &--empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-soft);
+    text-align: center;
+    padding: 60rpx;
+  }
+  &__empty-emoji {
+    font-size: 120rpx;
+    margin-bottom: 28rpx;
+  }
+  &__empty-title {
+    font-size: 36rpx;
+    font-weight: 900;
+    color: var(--ink);
+  }
+  &__empty-sub {
+    font-size: 26rpx;
+    margin-top: 12rpx;
+  }
+}
