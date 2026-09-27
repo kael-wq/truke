@@ -64,6 +64,7 @@ body{
   transition:background .15s;
 }
 .cta-outline:active{background:var(--chip)}
+.cta-primary:disabled{cursor:default}
 
 /* ============ Bottom tab bar ============ */
 .tabbar{
@@ -269,6 +270,14 @@ body{
 .trust-row{display:flex;gap:10px;margin-bottom:20px}
 .trust{flex:1;background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:13px;display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;color:var(--body)}
 .trust .icon{width:18px;height:18px;stroke:var(--mint-deep)}
+
+.confirm-secondary{display:flex;gap:10px;margin-top:10px}
+.demo-advance{
+  display:block;width:100%;margin-top:14px;padding:11px;border-radius:999px;
+  border:1.5px dashed #C9BFB5;background:transparent;color:var(--caption);
+  font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s;
+}
+.demo-advance:active{background:var(--chip)}
 </style>
 </head>
 <body>
@@ -475,7 +484,7 @@ body{
       <div class="confirm-head">
         <span class="status-badge status-pending" id="confirmStatus">⏳ Pending</span>
         <h1 class="confirm-title">Swap Proposal</h1>
-        <p class="confirm-sub">Review the exchange before you confirm.</p>
+        <p class="confirm-sub" id="confirmDesc">Your proposal was sent. Maya needs to accept before you can arrange the exchange.</p>
       </div>
 
       <div class="swap-summary">
@@ -510,7 +519,12 @@ body{
         <div class="trust"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l2 4 4 .5-3 3 .8 4.5L12 14l-3.8 2 .8-4.5-3-3L10 8z"/></svg>Mutual reviews</div>
       </div>
 
-      <button class="cta-primary" id="confirmBtn" onclick="confirmSwap()">Confirm Swap</button>
+      <button class="cta-primary" id="confirmBtn" disabled>Waiting for Maya…</button>
+      <div class="confirm-secondary" id="confirmSecondary">
+        <button class="cta-outline" onclick="toast('Opening chat with Maya')">Message Maya</button>
+        <button class="cta-outline" onclick="cancelProposal()">Cancel Proposal</button>
+      </div>
+      <button class="demo-advance" id="demoAdvance" onclick="demoAccept()">▶ Prototype: simulate Maya accepting</button>
     </div>
   </section>
 
@@ -621,24 +635,70 @@ function sendProposal(){
   document.getElementById('receiveThumb').style.background = document.getElementById('detailHero').style.background;
   document.getElementById('receiveName').textContent = document.getElementById('detailTitle').textContent;
 
+  // 重置成色核对
+  document.querySelectorAll('.checkbox').forEach(c=>c.classList.remove('checked'));
+
   closeSwapModal();
   showScreen('screen-confirm');
   setStatus('pending');
   toast('Proposal sent');
 }
 
-/* Confirmation */
+/* Confirmation 状态机（修正版）：
+   pending   = 我已提交提案，等对方接受（我无法自行确认）
+   accepted  = 对方已接受，等我确认收到
+   completed = 双方确认完成 */
 function toggleCheck(el){ el.classList.toggle('checked'); }
+
 function setStatus(s){
   const badge = document.getElementById('confirmStatus');
+  const desc = document.getElementById('confirmDesc');
   const btn = document.getElementById('confirmBtn');
-  if(s==='pending'){ badge.className='status-badge status-pending'; badge.textContent='⏳ Pending'; btn.textContent='Confirm Swap'; btn.onclick=()=>confirmSwap(); }
-  else if(s==='accepted'){ badge.className='status-badge status-accepted'; badge.innerHTML='✓ Accepted'; btn.textContent='Mark as Completed'; btn.onclick=()=>setStatus('completed'); }
-  else { badge.className='status-badge status-completed'; badge.innerHTML='✓✓ Completed'; btn.textContent='Swap Completed'; btn.onclick=null; btn.style.opacity='.7'; }
+  const secondary = document.getElementById('confirmSecondary');
+  const demo = document.getElementById('demoAdvance');
+
+  if(s==='pending'){
+    badge.className = 'status-badge status-pending';
+    badge.innerHTML = '⏳ Pending';
+    desc.textContent = 'Your proposal was sent. Maya needs to accept before you can arrange the exchange.';
+    btn.textContent = 'Waiting for Maya…';
+    btn.disabled = true;
+    btn.onclick = null;
+    btn.style.opacity = '.5';
+    secondary.style.display = 'flex';
+    demo.style.display = 'block';
+  } else if(s==='accepted'){
+    badge.className = 'status-badge status-accepted';
+    badge.innerHTML = '✓ Accepted';
+    desc.textContent = 'Maya accepted your proposal. Verify the condition, then confirm once you\u2019ve received the item.';
+    btn.textContent = 'Confirm Received';
+    btn.disabled = false;
+    btn.onclick = () => setStatus('completed');
+    btn.style.opacity = '1';
+    secondary.style.display = 'flex';
+    demo.style.display = 'none';
+  } else {
+    badge.className = 'status-badge status-completed';
+    badge.innerHTML = '✓✓ Completed';
+    desc.textContent = 'Swap complete. Leave Maya a review to help the community trust each other.';
+    btn.textContent = 'Leave a Review';
+    btn.disabled = false;
+    btn.onclick = () => toast('Review posted — thanks!');
+    btn.style.opacity = '1';
+    secondary.style.display = 'none';
+    demo.style.display = 'none';
+  }
 }
-function confirmSwap(){
+
+/* 原型辅助：模拟对方接受（真实产品里由对方的操作触发） */
+function demoAccept(){
   setStatus('accepted');
-  toast('Swap accepted — meetup scheduled');
+  toast('Maya accepted your proposal');
+}
+
+function cancelProposal(){
+  toast('Proposal cancelled');
+  showScreen('screen-detail');
 }
 
 /* Toast */
