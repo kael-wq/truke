@@ -7,14 +7,10 @@ import ActionButtons from '../../components/ActionButtons'
 import MatchModal from '../../components/MatchModal'
 import TabBar from '../../components/TabBar'
 import { useCardStore } from '../../stores/useCardStore'
-import { useCoinStore } from '../../stores/useCoinStore'
 import './index.scss'
 
 export default function Index() {
   const loadCards = useCardStore(s => s.loadCards)
-  const balance = useCoinStore(s => s.balance)
-  const insufficient = useCoinStore(s => s.insufficient)
-  const openPay = useCoinStore(s => s.openPay)
 
   const [statusBarH, setStatusBarH] = useState(20)
 
@@ -26,8 +22,6 @@ export default function Index() {
     loadCards()
   })
 
-  const toast = (title: string) => Taro.showToast({ title, icon: 'none', duration: 1200 })
-
   return (
     <View className="index-page">
       <View className="grain-overlay" />
@@ -38,12 +32,6 @@ export default function Index() {
           <Text className="logo-mark">⇄</Text>
           <Text className="logo-text">换换</Text>
           <Text className="logo-sub">SwapSwap</Text>
-        </View>
-        <View className="header-actions">
-          <View className="icon-btn" onClick={() => toast('筛选功能')}>⚙️</View>
-          <View className={`coin-pill ${insufficient ? 'coin-pill--shake' : ''}`} onClick={openPay}>
-            <Text>💰 {balance}</Text>
-          </View>
         </View>
       </View>
 

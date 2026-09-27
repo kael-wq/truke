@@ -42,45 +42,6 @@
   font-weight: 700;
   letter-spacing: 2rpx;
 }
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 16rpx;
-}
-.icon-btn {
-  width: 72rpx;
-  height: 72rpx;
-  border-radius: 50%;
-  background: var(--card);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32rpx;
-  box-shadow: 0 6rpx 18rpx rgba(93, 72, 45, 0.12);
-  position: relative;
-}
-.coin-pill {
-  display: flex;
-  align-items: center;
-  height: 72rpx;
-  padding: 0 24rpx;
-  border-radius: 36rpx;
-  background: var(--card);
-  box-shadow: 0 6rpx 18rpx rgba(93, 72, 45, 0.12);
-  font-size: 26rpx;
-  font-weight: 800;
-}
-.coin-pill--shake {
-  animation: shake 0.5s;
-}
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-10rpx); }
-  40% { transform: translateX(10rpx); }
-  60% { transform: translateX(-8rpx); }
-  80% { transform: translateX(8rpx); }
-}
-
 .index-stack-wrap {
   flex: 1;
   position: relative;

@@ -76,31 +76,6 @@ body{
   box-shadow:0 4px 10px rgba(232,87,42,.35);transform:rotate(-4deg);
 }
 .logo small{font-family:'Outfit';font-weight:700;font-size:11px;color:var(--ink-faint);letter-spacing:1px;margin-left:2px}
-.header-actions{display:flex;align-items:center;gap:9px}
-.icon-btn{
-  width:38px;height:38px;border-radius:50%;border:none;background:var(--card);
-  display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;
-  box-shadow:0 3px 9px rgba(93,72,45,.12);position:relative;transition:transform .15s;
-}
-.icon-btn:active{transform:scale(.9)}
-
-.coin-pill{
-  display:flex;align-items:center;gap:4px;height:38px;padding:0 12px;border-radius:19px;
-  background:var(--card);box-shadow:0 3px 9px rgba(93,72,45,.12);cursor:pointer;
-  font-weight:700;font-size:13px;border:none;font-family:inherit;color:var(--ink);
-  transition:transform .15s;
-}
-.coin-pill:active{transform:scale(.92)}
-.coin-pill .coin{font-size:15px}
-.coin-pill.shake{animation:shake .5s}
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-5px)}
-  40%{transform:translateX(5px)}
-  60%{transform:translateX(-4px)}
-  80%{transform:translateX(4px)}
-}
-
 /* ============ Category tabs ============ */
 .categories{
   flex:none;display:flex;gap:8px;padding:6px 16px 12px;overflow-x:auto;scrollbar-width:none;position:relative;z-index:9;
@@ -491,10 +466,6 @@ body{
     <div class="logo">
       <span class="mark">⇄</span>换换<small>SwapSwap</small>
     </div>
-    <div class="header-actions">
-      <button class="icon-btn" id="btnFilter" title="筛选">⚙️</button>
-      <button class="coin-pill" id="coinPill"><span class="coin">💰</span><span id="coinNum">30</span></button>
-    </div>
   </header>
 
   <!-- Category tabs -->
@@ -784,15 +755,11 @@ function showTooltip(anchor, text){
   clearTimeout(tip._t); tip._t = setTimeout(()=>tip.classList.remove('show'), 1500);
 }
 function updateCoins(){
-  $('#coinNum').textContent = state.coins;
   $('#profileCoinNum').textContent = state.coins;
   $('#menuCoinVal').textContent = state.coins + ' 币';
 }
 function spendCoins(n){
   if(state.coins >= n){ state.coins -= n; updateCoins(); return true; }
-  // not enough -> shake then open purchase
-  const pill = $('#coinPill'); pill.classList.add('shake');
-  setTimeout(()=>pill.classList.remove('shake'), 550);
   toast('换换币不足，先充值吧');
   setTimeout(()=>openCoinSheet(), 600);
   return false;
@@ -1163,7 +1130,6 @@ $('#btnPay').addEventListener('click', ()=>{
   $('#coinSheet').classList.remove('open');
   toast(`充值成功 +${t.coins} 换换币 🎉`);
 });
-$('#coinPill').addEventListener('click', openCoinSheet);
 $('#profileCoinCard').addEventListener('click', openCoinSheet);
 $('#menuCoins').addEventListener('click', openCoinSheet);
 $('#coinClose').addEventListener('click', ()=>$('#coinSheet').classList.remove('open'));
@@ -1229,7 +1195,6 @@ $('#btnPublish').addEventListener('click', ()=>{
 $('#pubClose').addEventListener('click', ()=>$('#publishSheet').classList.remove('open'));
 
 /* ===================== Filter ===================== */
-$('#btnFilter').addEventListener('click', ()=>$('#filterSheet').classList.add('open'));
 $('#filterClose').addEventListener('click', ()=>$('#filterSheet').classList.remove('open'));
 $('#distSlider').addEventListener('input', e=>{ $('#distVal').textContent = e.target.value + ' km 内'; state.filter.dist = +e.target.value; });
 $('#condFilterRow').querySelectorAll('.chip').forEach(c=>c.addEventListener('click', ()=>{
