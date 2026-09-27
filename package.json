@@ -36,7 +36,7 @@
   "devDependencies": {
     "@babel/core": "^7.21.5",
     "@tarojs/cli": "3.6.25",
-    "@tarojs/plugin-sass": "3.6.25",
+    "@tarojs/plugin-sass": "2.2.22",
     "@tarojs/webpack5-runner": "3.6.25",
     "@types/node": "^18.16.0",
     "@types/react": "^18.2.0",
@@ -44,6 +44,6 @@
     "babel-preset-taro": "3.6.25",
     "sass": "^1.63.0",
     "typescript": "^5.0.4",
-    "webpack": "^5.78.0"
+    "webpack": "5.78.0"
   }
 }

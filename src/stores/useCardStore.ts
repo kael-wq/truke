@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import Taro from '@tarojs/taro'
 import { CardItem, DragFeedback, MatchResult, SwipeDir } from '../types'
 import { fetchCards, recordSwipe } from '../services/match'
 import { rankOffers } from '../services/recommend'
@@ -74,6 +75,13 @@ export const useCardStore = create<CardState>((set, get) => ({
       const match = await recordSwipe(item._id, action, offerItemId, rankedOfferIds)
       if (match) {
         set({ lastMatch: match })
+      } else {
+        // 没匹配上也要给反馈，避免「滑了像没反应」
+        if (dir === 'left') {
+          Taro.showToast({ title: '已跳过', icon: 'none', duration: 1200 })
+        } else {
+          Taro.showToast({ title: superSwap ? '超级想换已发送' : '想换申请已发送', icon: 'none', duration: 1500 })
+        }
       }
     } catch (e) {
       // 忽略云函数错误

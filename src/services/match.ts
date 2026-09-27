@@ -2,6 +2,9 @@ import { CardItem, MatchResult } from '../types'
 import { callCloud } from './cloud'
 import { MOCK_CARDS, MY_PUBLISHED } from './mock'
 
+/** 演示模式：记录右滑次数，保证第一次右滑必出匹配弹窗，之后 50% */
+let mockSwapCount = 0
+
 /** 拉取待滑动的卡片列表（附近 + 分类 + Boost 优先） */
 export async function fetchCards(category: string): Promise<CardItem[]> {
   try {
@@ -29,17 +32,21 @@ export async function recordSwipe(
   try {
     return await callCloud<MatchResult | null>('onSwipe', { targetItemId, action, offerItemId, rankedOfferIds })
   } catch (e) {
-    // 本地演示：约 40% 概率命中匹配，且「我的物品」= 出价物品
+    // 本地演示：第一次右滑必匹配，之后 50% 命中；「我的物品」= 出价物品
     const item = MOCK_CARDS.find(c => c._id === targetItemId)
-    if ((action === 'swap' || action === 'superSwap') && item && Math.random() < 0.4) {
-      const offered =
-        MY_PUBLISHED.find(m => m._id === offerItemId) ||
-        MY_PUBLISHED[0] ||
-        { ...item, _id: 'me_' + item._id, title: 'Fender 电吉他', cover: '🎸', owner: { emoji: '🦊', nickname: '小狐狸' }, ownerOpenid: 'me' }
-      return {
-        myItem: { ...offered, owner: offered.owner || { emoji: '🦊', nickname: '小狐狸' } },
-        theirItem: item,
-        matchedAt: Date.now()
+    if ((action === 'swap' || action === 'superSwap') && item) {
+      mockSwapCount++
+      const hit = mockSwapCount === 1 || Math.random() < 0.5
+      if (hit) {
+        const offered =
+          MY_PUBLISHED.find(m => m._id === offerItemId) ||
+          MY_PUBLISHED[0] ||
+          { ...item, _id: 'me_' + item._id, title: 'Fender 电吉他', cover: '🎸', owner: { emoji: '🦊', nickname: '小狐狸' }, ownerOpenid: 'me' }
+        return {
+          myItem: { ...offered, owner: offered.owner || { emoji: '🦊', nickname: '小狐狸' } },
+          theirItem: item,
+          matchedAt: Date.now()
+        }
       }
     }
     return null
