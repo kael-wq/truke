@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Truke — Swap idle belongings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F8F5F2;
+  --card:#FFFFFF;
+  --ink:#1A100C;
+  --body:#666666;
+  --caption:#999999;
+  --accent:#E74C3C;
+  --mint:#A8E6CF;
+  --mint-deep:#15835B;
+  --line:#EEE9E4;
+  --chip:#F0EBE6;
+  --shadow:0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 32px rgba(0,0,0,.14);
+  --r:20px;
+  --r-sm:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  background:#211c18;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Phone frame */
+.app{
+  position:relative;width:100%;height:100%;
+  background:var(--bg);overflow:hidden;
+  display:flex;flex-direction:column;
+}
+@media (min-width:520px){
+  .app{width:390px;height:844px;border-radius:44px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 10px #171310,0 0 0 12px #3a332c;margin:24px}
+}
+
+/* Screens */
+.screen{position:absolute;inset:0;display:none;flex-direction:column;overflow-y:auto;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.screen.active{display:flex;animation:screenIn .28s ease}
+@keyframes screenIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+
+/* Generic */
+.icon{width:24px;height:24px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.pill{display:inline-flex;align-items:center;justify-content:center;border:none;cursor:pointer;font-family:inherit}
+.cta-primary{
+  background:var(--ink);color:#fff;font-weight:700;font-size:16px;
+  border-radius:999px;padding:16px 24px;width:100%;border:none;cursor:pointer;
+  transition:transform .15s,opacity .15s;
+}
+.cta-primary:active{transform:scale(.98)}
+.cta-outline{
+  background:transparent;color:var(--ink);font-weight:600;font-size:16px;
+  border-radius:999px;padding:15px 24px;width:100%;border:1.5px solid #D8D0C8;cursor:pointer;
+  transition:background .15s;
+}
+.cta-outline:active{background:var(--chip)}
+
+/* ============ Bottom tab bar ============ */
+.tabbar{
+  position:absolute;left:0;right:0;bottom:0;z-index:60;
+  background:var(--card);border-top:1px solid var(--line);
+  display:flex;align-items:flex-end;justify-content:space-around;
+  padding:8px 8px calc(10px + env(safe-area-inset-bottom));
+}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:none;cursor:pointer;font-family:inherit;font-size:10px;font-weight:600;color:var(--caption);flex:1;transition:color .15s}
+.tab.active{color:var(--ink)}
+.tab-post{
+  flex:1;display:flex;justify-content:center;margin-top:-26px;
+}
+.tab-post .post-btn{
+  width:56px;height:56px;border-radius:50%;background:var(--ink);color:#fff;
+  display:flex;align-items:center;justify-content:center;border:5px solid var(--bg);
+  box-shadow:0 8px 18px rgba(26,16,12,.35);cursor:pointer;
+}
+
+/* ============ Screen 1 — Home ============ */
+.home{padding:0 16px 96px}
+.home-top{display:flex;align-items:center;justify-content:space-between;padding:16px 4px 12px}
+.home-loc{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--body);font-weight:600}
+.home-loc .icon{width:16px;height:16px;stroke:var(--accent)}
+.home-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#F3D9B8,#E8B88A);display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--shadow);cursor:pointer}
+.home-title{font-size:26px;font-weight:800;letter-spacing:-.5px;line-height:1.2;margin:2px 4px 14px}
+
+.searchbar{
+  display:flex;align-items:center;gap:10px;background:var(--card);
+  border-radius:999px;padding:12px 18px;box-shadow:var(--shadow);margin-bottom:16px;
+}
+.searchbar .icon{width:20px;height:20px;stroke:var(--caption)}
+.searchbar span{color:var(--caption);font-size:14px;font-weight:500}
+.searchbar .filter{width:34px;height:34px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;margin-left:auto}
+
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px 16px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:9px 16px;border-radius:999px;background:var(--chip);border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--body);transition:all .15s}
+.chip.active{background:var(--ink);color:#fff}
+
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin:8px 2px 12px}
+.section-head h2{font-size:18px;font-weight:700;letter-spacing:-.2px}
+.section-head a{font-size:13px;color:var(--accent);font-weight:600;text-decoration:none}
+
+/* Near You horizontal */
+.near-row{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:2px 16px 20px}
+.near-row::-webkit-scrollbar{display:none}
+.near-card{flex:none;width:158px;background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;cursor:pointer;transition:transform .15s}
+.near-card:active{transform:scale(.97)}
+.near-photo{height:130px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative}
+.near-dist{position:absolute;top:8px;left:8px;background:rgba(255,255,255,.92);color:var(--ink);font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;display:flex;align-items:center;gap:3px}
+.near-dist .icon{width:12px;height:12px}
+.near-body{padding:11px 12px 12px}
+.near-title{font-size:13.5px;font-weight:700;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.near-owner{display:flex;align-items:center;gap:6px;margin-top:8px}
+.near-owner .oav{width:20px;height:20px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:11px}
+.near-owner span{font-size:11.5px;color:var(--body);font-weight:600}
+
+/* New items grid (2-col masonry) */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:8px}
+.item-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;cursor:pointer;position:relative;transition:transform .15s}
+.item-card:active{transform:scale(.98)}
+.item-photo{display:flex;align-items:center;justify-content:center;font-size:56px;position:relative}
+.item-photo.tall{height:170px}
+.item-photo.short{height:126px}
+.cond-tag{position:absolute;top:8px;left:8px;font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px}
+.cond-like-new{background:var(--mint);color:var(--mint-deep)}
+.cond-good{background:#F5E8D0;color:#96600F}
+.cond-fair{background:#FBE2DE;color:#B0392B}
+.heart-btn{
+  position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,.92);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.heart-btn .icon{width:16px;height:16px;stroke:var(--ink)}
+.heart-btn.liked .icon{fill:var(--accent);stroke:var(--accent)}
+.item-body{padding:11px 12px 13px}
+.item-title{font-size:14px;font-weight:700;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:35px}
+.item-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.item-owner{display:flex;align-items:center;gap:5px}
+.item-owner .oav{width:18px;height:18px;border-radius:50%;background:var(--chip);display:flex;align-items:center;justify-content:center;font-size:10px}
+.item-owner span{font-size:11px;color:var(--caption);font-weight:600}
+.item-value{font-size:13px;font-weight:800;color:var(--accent)}
+
+/* ============ Screen 2 — Detail ============ */
+.detail{position:relative}
+.hero{position:relative;height:300px;display:flex;align-items:center;justify-content:center;font-size:110px}
+.hero .dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.hero .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55)}
+.hero .dots i.on{background:#fff;width:20px;border-radius:4px}
+.detail-back{
+  position:absolute;top:calc(14px + env(safe-area-inset-top));left:16px;z-index:5;
+  width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+}
+.detail-tools{
+  position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;z-index:5;
+  display:flex;flex-direction:column;gap:10px;
+}
+.tool-btn{
+  position:relative;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+}
+.tool-btn .badge{
+  position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;border-radius:9px;background:var(--accent);
+  color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;
+}
+.detail-body{padding:18px 20px 120px;background:var(--bg);border-radius:24px 24px 0 0;margin-top:-24px;position:relative;z-index:2}
+.owner-row{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.owner-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#F3D9B8,#E8B88A);display:flex;align-items:center;justify-content:center;font-size:24px;position:relative}
+.verified{position:absolute;right:-2px;bottom:-2px;width:18px;height:18px;border-radius:50%;background:var(--mint);display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.verified .icon{width:10px;height:10px;stroke:var(--mint-deep)}
+.owner-info{flex:1}
+.owner-name{font-size:15px;font-weight:700;display:flex;align-items:center;gap:6px}
+.owner-sub{font-size:12.5px;color:var(--body);margin-top:2px;display:flex;align-items:center;gap:5px}
+.owner-sub .icon{width:13px;height:13px}
+.rating{display:flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;color:var(--ink)}
+.rating .star{width:15px;height:15px;stroke:#E8A93D;fill:#E8A93D}
+.owner-msg{
+  width:38px;height:38px;border-radius:50%;border:1.5px solid #D8D0C8;background:transparent;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;color:var(--ink);
+}
+.detail-title{font-size:22px;font-weight:800;letter-spacing:-.4px;line-height:1.25}
+.detail-desc{font-size:14.5px;color:var(--body);line-height:1.6;margin-top:10px}
+.spec-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.spec-chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:600;color:var(--body);display:flex;align-items:center;gap:6px}
+.spec-chip .icon{width:14px;height:14px;stroke:var(--caption)}
+
+.wants-chip{
+  display:flex;align-items:center;gap:8px;margin-top:16px;background:#FDF0EC;
+  border:1px solid #F7D5CD;border-radius:14px;padding:12px 14px;
+}
+.wants-chip .icon{width:18px;height:18px;stroke:var(--accent)}
+.wants-chip .wt{font-size:12px;color:var(--accent);font-weight:700}
+.wants-chip .wv{font-size:13px;color:var(--ink);font-weight:600}
+
+.detail-cta{position:absolute;left:0;right:0;bottom:0;z-index:10;background:linear-gradient(180deg,rgba(248,245,242,0),var(--bg) 30%);padding:40px 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}
+
+/* ============ Swap modal ============ */
+.modal-backdrop{position:absolute;inset:0;z-index:100;background:rgba(26,16,12,.5);display:none;align-items:flex-end}
+.modal-backdrop.open{display:flex;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-sheet{
+  width:100%;background:var(--card);border-radius:26px 26px 0 0;padding:18px 20px calc(26px + env(safe-area-inset-bottom));
+  max-height:76%;overflow-y:auto;animation:sheetUp .32s cubic-bezier(.2,1,.3,1);
+}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+.sheet-grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 16px}
+.sheet-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.sheet-sub{font-size:13px;color:var(--body);margin-bottom:16px}
+.my-item{display:flex;align-items:center;gap:12px;padding:12px;border:1.5px solid var(--line);border-radius:16px;margin-bottom:10px;cursor:pointer;transition:all .15s}
+.my-item.selected{border-color:var(--ink);background:#FBFAF8}
+.my-item .mi-thumb{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex:none}
+.my-item .mi-info{flex:1}
+.my-item .mi-name{font-size:14px;font-weight:700}
+.my-item .mi-cond{font-size:11.5px;color:var(--caption);font-weight:600;margin-top:2px}
+.my-item .radio{width:22px;height:22px;border-radius:50%;border:2px solid #D8D0C8;flex:none;display:flex;align-items:center;justify-content:center}
+.my-item.selected .radio{border-color:var(--ink);background:var(--ink)}
+.my-item.selected .radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff}
+
+/* ============ Screen 3 — Confirmation ============ */
+.confirm{padding:0 20px 40px}
+.confirm-head{display:flex;flex-direction:column;align-items:center;text-align:center;padding:28px 0 20px}
+.status-badge{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;padding:7px 15px;border-radius:999px;margin-bottom:12px}
+.status-pending{background:#F5E8D0;color:#96600F}
+.status-accepted{background:var(--mint);color:var(--mint-deep)}
+.status-completed{background:var(--mint);color:var(--mint-deep)}
+.confirm-title{font-size:24px;font-weight:800;letter-spacing:-.4px}
+.confirm-sub{font-size:13.5px;color:var(--body);margin-top:6px}
+
+.swap-summary{display:flex;align-items:stretch;gap:10px;margin-bottom:20px}
+.swap-col{flex:1;background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;text-align:center}
+.swap-col .sc-label{font-size:11px;font-weight:700;color:var(--caption);text-transform:uppercase;letter-spacing:.6px}
+.swap-col .sc-thumb{height:86px;display:flex;align-items:center;justify-content:center;font-size:44px;margin:8px 0}
+.swap-col .sc-name{font-size:13px;font-weight:700;line-height:1.3}
+.swap-arrow{align-self:center;flex:none;width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center}
+.swap-arrow .icon{width:18px;height:18px}
+
+.check-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
+.check-card h3{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.check-card h3 .icon{width:18px;height:18px;stroke:var(--mint-deep)}
+.check-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--body)}
+.check-item:last-child{border-bottom:none}
+.checkbox{width:22px;height:22px;border-radius:7px;border:1.5px solid #D8D0C8;flex:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.checkbox.checked{background:var(--mint);border-color:var(--mint)}
+.checkbox.checked .icon{width:13px;height:13px;stroke:var(--mint-deep)}
+
+.meetup{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:20px}
+.meetup h3{font-size:15px;font-weight:700;margin-bottom:10px}
+.meetup-map{
+  height:110px;border-radius:12px;background:
+    linear-gradient(135deg,#E9E2D8,#D8CEC0);
+  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+.meetup-map::before,.meetup-map::after{content:'';position:absolute;background:rgba(255,255,255,.6)}
+.meetup-map::before{left:20%;top:30%;width:60%;height:2px;transform:rotate(-8deg)}
+.meetup-map::after{left:30%;top:50%;width:40%;height:2px;transform:rotate(20deg)}
+.map-pin{position:relative;z-index:2;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(231,76,60,.4)}
+.map-pin .icon{width:18px;height:18px}
+.meetup-info{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:13px;color:var(--body)}
+.meetup-info b{color:var(--ink);font-weight:700}
+.meetup-tag{font-size:11.5px;font-weight:700;color:var(--accent)}
+
+.trust-row{display:flex;gap:10px;margin-bottom:20px}
+.trust{flex:1;background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:13px;display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;color:var(--body)}
+.trust .icon{width:18px;height:18px;stroke:var(--mint-deep)}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ SCREEN 1 — HOME ============ -->
+  <section class="screen active" id="screen-home">
+    <div class="home">
+      <div class="home-top">
+        <div class="home-loc">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          Brooklyn, NY
+        </div>
+        <div class="home-avatar">🙂</div>
+      </div>
+      <h1 class="home-title">Swap, don't shop.</h1>
+
+      <div class="searchbar">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span>Search items near you</span>
+        <div class="filter"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg></div>
+      </div>
+
+      <div class="chips" id="chips">
+        <button class="chip active">All</button>
+        <button class="chip">Electronics</button>
+        <button class="chip">Books</button>
+        <button class="chip">Clothing</button>
+        <button class="chip">Furniture</button>
+        <button class="chip">Toys</button>
+        <button class="chip">Sports</button>
+      </div>
+
+      <div class="section-head">
+        <h2>Near You</h2>
+        <a href="#">See all</a>
+      </div>
+
+      <div class="near-row">
+        <div class="near-card" onclick="openDetail('🎧','Sony WH-1000XM4','Maya','Like New','0.8 mi','#E9E2D8')">
+          <div class="near-photo" style="background:#E9E2D8">
+            🎧
+            <span class="near-dist"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>0.8 mi</span>
+          </div>
+          <div class="near-body">
+            <div class="near-title">Sony WH-1000XM4</div>
+            <div class="near-owner"><span class="oav">🐰</span><span>Maya · 4.9★</span></div>
+          </div>
+        </div>
+        <div class="near-card" onclick="openDetail('📷','Fujifilm X100V','Jon','Good','1.2 mi','#E4DFD5')">
+          <div class="near-photo" style="background:#E4DFD5">
+            📷
+            <span class="near-dist"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>1.2 mi</span>
+          </div>
+          <div class="near-body">
+            <div class="near-title">Fujifilm X100V</div>
+            <div class="near-owner"><span class="oav">🦊</span><span>Jon · 4.7★</span></div>
+          </div>
+        </div>
+        <div class="near-card" onclick="openDetail('🎮','Nintendo Switch OLED','Priya','Like New','1.5 mi','#E6DED3')">
+          <div class="near-photo" style="background:#E6DED3">
+            🎮
+            <span class="near-dist"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>1.5 mi</span>
+          </div>
+          <div class="near-body">
+            <div class="near-title">Nintendo Switch OLED</div>
+            <div class="near-owner"><span class="oav">🐼</span><span>Priya · 4.8★</span></div>
+          </div>
+        </div>
+        <div class="near-card" onclick="openDetail('🪑','Mid-century chair','Sam','Fair','2.0 mi','#E9E0D0')">
+          <div class="near-photo" style="background:#E9E0D0">
+            🪑
+            <span class="near-dist"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>2.0 mi</span>
+          </div>
+          <div class="near-body">
+            <div class="near-title">Mid-century chair</div>
+            <div class="near-owner"><span class="oav">🦉</span><span>Sam · 4.6★</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2>New Items</h2>
+        <a href="#">See all</a>
+      </div>
+
+      <div class="grid">
+        <div class="item-card" onclick="openDetail('👟','Air Jordan 1 Retro','Tee','Like New','1.1 mi','#E8E0D6')">
+          <div class="item-photo tall" style="background:#E8E0D6">👟<span class="cond-tag cond-like-new">Like New</span></div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></svg></button>
+          <div class="item-body">
+            <div class="item-title">Air Jordan 1 Retro High OG</div>
+            <div class="item-meta"><div class="item-owner"><span class="oav">🐯</span><span>Tee</span></div><span class="item-value">1.1 mi</span></div>
+          </div>
+        </div>
+        <div class="item-card" onclick="openDetail('📚','Sapiens hardcover set','Lena','Good','0.6 mi','#E5DFD3')">
+          <div class="item-photo short" style="background:#E5DFD3">📚<span class="cond-tag cond-good">Good</span></div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></svg></button>
+          <div class="item-body">
+            <div class="item-title">Sapiens &amp; Homo Deus hardcovers</div>
+            <div class="item-meta"><div class="item-owner"><span class="oav">🐱</span><span>Lena</span></div><span class="item-value">0.6 mi</span></div>
+          </div>
+        </div>
+        <div class="item-card" onclick="openDetail('🚲','Vintage road bike','Marco','Fair','2.3 mi','#E7DED0')">
+          <div class="item-photo short" style="background:#E7DED0">🚲<span class="cond-tag cond-fair">Fair</span></div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></svg></button>
+          <div class="item-body">
+            <div class="item-title">Vintage road bike, 58cm</div>
+            <div class="item-meta"><div class="item-owner"><span class="oav">🐺</span><span>Marco</span></div><span class="item-value">2.3 mi</span></div>
+          </div>
+        </div>
+        <div class="item-card" onclick="openDetail('💡','Herman Miller lamp','Ava','Like New','0.9 mi','#EAE2D6')">
+          <div class="item-photo tall" style="background:#EAE2D6">💡<span class="cond-tag cond-like-new">Like New</span></div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></svg></button>
+          <div class="item-body">
+            <div class="item-title">Herman Miller desk lamp</div>
+            <div class="item-meta"><div class="item-owner"><span class="oav">🦌</span><span>Ava</span></div><span class="item-value">0.9 mi</span></div>
+          </div>
+        </div>
+        <div class="item-card" onclick="openDetail('🧸','LEGO Saturn V (sealed)','Ravi','Like New','1.7 mi','#E5DED2')">
+          <div class="item-photo short" style="background:#E5DED2">🧸<span class="cond-tag cond-like-new">Like New</span></div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></svg></button>
+          <div class="item-body">
+            <div class="item-title">LEGO Saturn V rocket (sealed)</div>
+            <div class="item-meta"><div class="item-owner"><span class="oav">🐻</span><span>Ravi</span></div><span class="item-value">1.7 mi</span></div>
+          </div>
+        </div>
+        <div class="item-card" onclick="openDetail('🎸','Fender acoustic guitar','Noa','Good','1.4 mi','#E9E1D4')">
+          <div class="item-photo tall" style="background:#E9E1D4">🎸<span class="cond-tag cond-good">Good</span></div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><svg class="icon" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></svg></button>
+          <div class="item-body">
+            <div class="item-title">Fender acoustic guitar</div>
+            <div class="item-meta"><div class="item-owner"><span class="oav">🦅</span><span>Noa</span></div><span class="item-value">1.4 mi</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabbar">
+      <button class="tab active"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Home</button>
+      <button class="tab" onclick="toast('Search')"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search</button>
+      <div class="tab-post"><button class="post-btn" onclick="toast('Post an item')"><svg class="icon" style="width:22px;height:22px;stroke-width:2.2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div>
+      <button class="tab" onclick="toast('Inbox')"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 6l8 7 8-7"/></svg>Inbox</button>
+      <button class="tab" onclick="toast('Profile')"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 2 — DETAIL ============ -->
+  <section class="screen" id="screen-detail">
+    <div class="detail">
+      <div class="hero" id="detailHero" style="background:#E9E2D8">
+        <span id="detailEmoji">🎧</span>
+        <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+      </div>
+      <button class="detail-back" onclick="showScreen('screen-home')">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8"/></svg>
+      </button>
+      <div class="detail-tools">
+        <button class="tool-btn" onclick="toast('Comments')"><svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg><span class="badge">12</span></button>
+        <button class="tool-btn" onclick="toast('Share')"><svg class="icon" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.3 10.8 7.4-3.6M8.3 13.2l7.4 3.6"/></svg></button>
+        <button class="tool-btn" onclick="toast('Report')"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4v8M12 16v.5"/><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/></svg></button>
+      </div>
+
+      <div class="detail-body">
+        <div class="owner-row">
+          <div class="owner-av">🐰<span class="verified"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg></span></div>
+          <div class="owner-info">
+            <div class="owner-name" id="detailOwner">Maya</div>
+            <div class="owner-sub">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              Brooklyn · <span id="detailDist">0.8 mi</span>
+            </div>
+          </div>
+          <div class="rating"><svg class="star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></svg>4.8</div>
+        </div>
+
+        <h1 class="detail-title" id="detailTitle">Sony WH-1000XM4 headphones</h1>
+        <p class="detail-desc">Barely used, comes with the original case and cable. Battery life is still excellent — I just upgraded to the XM5s.</p>
+
+        <div class="spec-row">
+          <span class="spec-chip" id="detailCond"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>Like New</span>
+          <span class="spec-chip"><svg class="icon" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg>7.5 × 3 in</span>
+          <span class="spec-chip"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Used ~6 mo</span>
+        </div>
+
+        <div class="wants-chip">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+          <span class="wt">Owner wants</span>
+          <span class="wv">Books / Camera gear</span>
+        </div>
+      </div>
+
+      <div class="detail-cta">
+        <button class="cta-primary" onclick="openSwapModal()">Propose a Swap</button>
+        <button class="cta-outline" onclick="toast('Message sent to Maya')">Message Owner</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3 — CONFIRMATION ============ -->
+  <section class="screen" id="screen-confirm">
+    <div class="confirm">
+      <div class="confirm-head">
+        <span class="status-badge status-pending" id="confirmStatus">⏳ Pending</span>
+        <h1 class="confirm-title">Swap Proposal</h1>
+        <p class="confirm-sub">Review the exchange before you confirm.</p>
+      </div>
+
+      <div class="swap-summary">
+        <div class="swap-col">
+          <div class="sc-label">You give</div>
+          <div class="sc-thumb" style="background:#F0EBE6">📖</div>
+          <div class="sc-name">A Brief History of Time (hardcover)</div>
+        </div>
+        <div class="swap-arrow"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M14 6l6 6-6 6"/></svg></div>
+        <div class="swap-col">
+          <div class="sc-label">You receive</div>
+          <div class="sc-thumb" style="background:#E9E2D8">🎧</div>
+          <div class="sc-name">Sony WH-1000XM4 headphones</div>
+        </div>
+      </div>
+
+      <div class="check-card">
+        <h3><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>Condition verification</h3>
+        <div class="check-item"><div class="checkbox" onclick="toggleCheck(this)"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg></div>Photos match the described condition</div>
+        <div class="check-item"><div class="checkbox" onclick="toggleCheck(this)"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg></div>No hidden damage or missing parts</div>
+        <div class="check-item"><div class="checkbox" onclick="toggleCheck(this)"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg></div>Original accessories included</div>
+      </div>
+
+      <div class="meetup">
+        <h3>Meetup location</h3>
+        <div class="meetup-map"><div class="map-pin"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div></div>
+        <div class="meetup-info"><span><b>Prospect Park entrance</b> · 0.6 mi from both</span><span class="meetup-tag">Suggested</span></div>
+      </div>
+
+      <div class="trust-row">
+        <div class="trust"><svg class="icon" viewBox="0 0 24 24"><path d="M5 12l5 5L19 7"/></svg>Verified swapper</div>
+        <div class="trust"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l2 4 4 .5-3 3 .8 4.5L12 14l-3.8 2 .8-4.5-3-3L10 8z"/></svg>Mutual reviews</div>
+      </div>
+
+      <button class="cta-primary" id="confirmBtn" onclick="confirmSwap()">Confirm Swap</button>
+    </div>
+  </section>
+
+  <!-- ============ SWAP MODAL ============ -->
+  <div class="modal-backdrop" id="swapModal" onclick="if(event.target===this)closeSwapModal()">
+    <div class="modal-sheet">
+      <div class="sheet-grab"></div>
+      <div class="sheet-title">Choose what to offer</div>
+      <div class="sheet-sub">Pick one item from your inventory to propose in exchange.</div>
+
+      <div class="my-item" onclick="selectItem(this)">
+        <div class="mi-thumb" style="background:#F0EBE6">📖</div>
+        <div class="mi-info"><div class="mi-name">A Brief History of Time</div><div class="mi-cond">Good · Books</div></div>
+        <div class="radio"></div>
+      </div>
+      <div class="my-item" onclick="selectItem(this)">
+        <div class="mi-thumb" style="background:#E9E2D8">🎮</div>
+        <div class="mi-info"><div class="mi-name">PS4 Pro + 2 controllers</div><div class="mi-cond">Like New · Electronics</div></div>
+        <div class="radio"></div>
+      </div>
+      <div class="my-item" onclick="selectItem(this)">
+        <div class="mi-thumb" style="background:#E7DED0">🚲</div>
+        <div class="mi-info"><div class="mi-name">Vintage road bike</div><div class="mi-cond">Fair · Sports</div></div>
+        <div class="radio"></div>
+      </div>
+      <div class="my-item" onclick="selectItem(this)">
+        <div class="mi-thumb" style="background:#EAE2D6">💡</div>
+        <div class="mi-info"><div class="mi-name">Herman Miller desk lamp</div><div class="mi-cond">Like New · Furniture</div></div>
+        <div class="radio"></div>
+      </div>
+
+      <button class="cta-primary" style="margin-top:8px" onclick="sendProposal()">Send Proposal</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* Screen navigation */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if(id==='screen-home') document.querySelector('.tabbar .tab').classList.add('active');
+}
+
+/* Detail: populate from tapped card */
+const DETAIL_EMOJI_MAP = {
+  '🎧':['#E9E2D8','Maya','Like New','0.8 mi','Books / Camera gear'],
+  '📷':['#E4DFD5','Jon','Good','1.2 mi','Vintage lenses'],
+  '🎮':['#E6DED3','Priya','Like New','1.5 mi','Books / Board games'],
+  '🪑':['#E9E0D0','Sam','Fair','2.0 mi','Record player'],
+  '👟':['#E8E0D6','Tee','Like New','1.1 mi','Streetwear / Caps'],
+  '📚':['#E5DFD3','Lena','Good','0.6 mi','Kitchenware'],
+  '🚲':['#E7DED0','Marco','Fair','2.3 mi','Camping gear'],
+  '💡':['#EAE2D6','Ava','Like New','0.9 mi','Planters / Ceramics'],
+  '🧸':['#E5DED2','Ravi','Like New','1.7 mi','LEGO / Puzzles'],
+  '🎸':['#E9E1D4','Noa','Good','1.4 mi','Camera gear']
+};
+function openDetail(emoji, title, owner, cond, dist, bg){
+  const d = DETAIL_EMOJI_MAP[emoji] || [bg, owner, cond, dist, 'Books / Camera gear'];
+  document.getElementById('detailEmoji').textContent = emoji;
+  document.getElementById('detailHero').style.background = d[0];
+  document.getElementById('detailOwner').textContent = d[1];
+  document.getElementById('detailDist').textContent = d[3];
+  document.getElementById('detailCond').innerHTML = document.getElementById('detailCond').innerHTML.replace(/Like New|Good|Fair/, d[2]);
+  document.getElementById('detailTitle').textContent = title;
+  showScreen('screen-detail');
+}
+
+/* Like toggle */
+function toggleHeart(btn){ btn.classList.toggle('liked'); }
+
+/* Category chips */
+document.getElementById('chips').addEventListener('click', e=>{
+  if(e.target.classList.contains('chip')){
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    e.target.classList.add('active');
+  }
+});
+
+/* Swap modal */
+function openSwapModal(){ document.getElementById('swapModal').classList.add('open'); }
+function closeSwapModal(){ document.getElementById('swapModal').classList.remove('open'); }
+function selectItem(el){
+  document.querySelectorAll('.my-item').forEach(i=>i.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function sendProposal(){
+  const sel = document.querySelector('.my-item.selected');
+  if(!sel){ toast('Pick an item to offer first'); return; }
+  closeSwapModal();
+  showScreen('screen-confirm');
+  setStatus('pending');
+  toast('Proposal sent to Maya');
+}
+
+/* Confirmation */
+function toggleCheck(el){ el.classList.toggle('checked'); }
+function setStatus(s){
+  const badge = document.getElementById('confirmStatus');
+  const btn = document.getElementById('confirmBtn');
+  if(s==='pending'){ badge.className='status-badge status-pending'; badge.textContent='⏳ Pending'; btn.textContent='Confirm Swap'; btn.onclick=()=>confirmSwap(); }
+  else if(s==='accepted'){ badge.className='status-badge status-accepted'; badge.innerHTML='✓ Accepted'; btn.textContent='Mark as Completed'; btn.onclick=()=>setStatus('completed'); }
+  else { badge.className='status-badge status-completed'; badge.innerHTML='✓✓ Completed'; btn.textContent='Swap Completed'; btn.onclick=null; btn.style.opacity='.7'; }
+}
+function confirmSwap(){
+  setStatus('accepted');
+  toast('Swap accepted — meetup scheduled');
+}
+
+/* Toast */
+let toastEl;
+function toast(msg){
+  if(!toastEl){
+    toastEl = document.createElement('div');
+    toastEl.style.cssText = 'position:absolute;left:50%;bottom:110px;transform:translateX(-50%) translateY(20px);background:rgba(26,16,12,.92);color:#fff;font-size:13px;font-weight:600;padding:11px 18px;border-radius:999px;z-index:200;transition:all .3s;white-space:nowrap;pointer-events:none';
+    document.querySelector('.app').appendChild(toastEl);
+  }
+  toastEl.textContent = msg;
+  requestAnimationFrame(()=>{ toastEl.style.opacity='1'; toastEl.style.transform='translateX(-50%) translateY(0)'; });
+  clearTimeout(toastEl._t);
+  toastEl._t = setTimeout(()=>{ toastEl.style.opacity='0'; toastEl.style.transform='translateX(-50%) translateY(20px)'; }, 1900);
+}
+</script>
+</body>
+</html>
