@@ -83,10 +83,7 @@ body{
   box-shadow:0 3px 9px rgba(93,72,45,.12);position:relative;transition:transform .15s;
 }
 .icon-btn:active{transform:scale(.9)}
-.icon-btn .dot{
-  position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;
-  background:var(--red);border:2px solid var(--card);
-}
+
 .coin-pill{
   display:flex;align-items:center;gap:4px;height:38px;padding:0 12px;border-radius:19px;
   background:var(--card);box-shadow:0 3px 9px rgba(93,72,45,.12);cursor:pointer;
@@ -476,19 +473,6 @@ body{
 .switch::after{content:'';position:absolute;top:3px;left:3px;width:23px;height:23px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 2px 5px rgba(0,0,0,.2)}
 .switch.on::after{left:24px}
 
-/* notification dropdown */
-.notif-drop{
-  position:absolute;top:58px;right:12px;z-index:90;width:270px;background:var(--card);border-radius:20px;
-  box-shadow:var(--shadow-float);overflow:hidden;display:none;animation:popIn .25s;
-}
-.notif-drop.open{display:block}
-.notif-item{display:flex;gap:11px;padding:13px 15px;border-bottom:1px solid var(--line);align-items:flex-start}
-.notif-item:last-child{border-bottom:none}
-.notif-item .n-ico{width:36px;height:36px;border-radius:12px;background:var(--bg-deep);display:flex;align-items:center;justify-content:center;font-size:17px;flex:none}
-.notif-item .n-txt{font-size:12.5px;font-weight:600;line-height:1.4;color:var(--ink)}
-.notif-item .n-time{font-size:10.5px;color:var(--ink-faint);font-weight:700;margin-top:2px}
-.notif-head{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;font-size:14px;font-weight:900;border-bottom:1px solid var(--line)}
-
 /* filter sheet rows */
 .filter-row{margin-bottom:18px}
 .filter-row .fr-label{font-size:13px;font-weight:900;margin-bottom:10px;display:flex;justify-content:space-between}
@@ -509,18 +493,9 @@ body{
     </div>
     <div class="header-actions">
       <button class="icon-btn" id="btnFilter" title="筛选">⚙️</button>
-      <button class="icon-btn" id="btnBell"><span class="bell">🔔</span><span class="dot" id="bellDot"></span></button>
       <button class="coin-pill" id="coinPill"><span class="coin">💰</span><span id="coinNum">30</span></button>
     </div>
   </header>
-
-  <!-- Notification dropdown -->
-  <div class="notif-drop" id="notifDrop">
-    <div class="notif-head">🔔 通知 <span style="font-size:11px;color:var(--ink-faint)">2 条未读</span></div>
-    <div class="notif-item"><span class="n-ico">🐰</span><div><div class="n-txt">兔兔 想用 <b>泡泡玛特盲盒</b> 换你的 <b>机械键盘</b></div><div class="n-time">2 分钟前</div></div></div>
-    <div class="notif-item"><span class="n-ico">⚡</span><div><div class="n-txt">你的 <b>复古收音机</b> 已 Boost，曝光 +128%</div><div class="n-time">1 小时前</div></div></div>
-    <div class="notif-item"><span class="n-ico">🎉</span><div><div class="n-txt">你和 🐱阿喵 <b>匹配成功</b>，快去聊聊吧！</div><div class="n-time">昨天</div></div></div>
-  </div>
 
   <!-- Category tabs -->
   <nav class="categories" id="categories"></nav>
@@ -827,7 +802,6 @@ function openCoinSheet(){
 }
 function closeSheets(){
   $$('.sheet.open').forEach(s=>s.classList.remove('open'));
-  $('#notifDrop').classList.remove('open');
 }
 
 /* ===================== Deck ===================== */
@@ -1268,15 +1242,6 @@ $('#btnApplyFilter').addEventListener('click', ()=>{
   $('#filterSheet').classList.remove('open');
   state.history = []; buildDeck();
   toast('筛选已应用');
-});
-
-/* ===================== Notification ===================== */
-$('#btnBell').addEventListener('click', ()=>{
-  const d = $('#notifDrop'); d.classList.toggle('open');
-  if(d.classList.contains('open')){ $('#bellDot').style.display='none'; }
-});
-document.addEventListener('click', e=>{
-  if(!$('#notifDrop').contains(e.target) && e.target.id!=='btnBell' && !$('#btnBell').contains(e.target)) $('#notifDrop').classList.remove('open');
 });
 
 /* ===================== Init ===================== */

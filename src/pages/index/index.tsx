@@ -41,10 +41,6 @@ export default function Index() {
         </View>
         <View className="header-actions">
           <View className="icon-btn" onClick={() => toast('筛选功能')}>⚙️</View>
-          <View className="icon-btn" onClick={() => toast('通知中心')}>
-            <Text>🔔</Text>
-            <View className="icon-dot" />
-          </View>
           <View className={`coin-pill ${insufficient ? 'coin-pill--shake' : ''}`} onClick={openPay}>
             <Text>💰 {balance}</Text>
           </View>
