@@ -32,7 +32,7 @@ export default function Index() {
         <View className="logo">
           <View className="logo-mark"><ArrowExchange size={18} /></View>
           <Text className="logo-text">换换</Text>
-          <Text className="logo-sub">SwapSwap</Text>
+          <Text className="logo-sub">Truke</Text>
         </View>
       </View>
 

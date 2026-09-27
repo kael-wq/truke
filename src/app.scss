@@ -1,25 +1,26 @@
-/* ============ 换换 SwapSwap 全局设计变量 ============ */
+/* ============ 换换 Truke 全局设计变量（Q6:B 森林绿）============ */
 page {
-  --bg: #EBE2CE;             /* 牛皮纸背景 */
-  --bg-deep: #E0D4B8;
-  --card: #FAF6EA;           /* 价签纸 */
-  --ink: #2B2417;            /* 油墨棕黑 */
-  --ink-soft: #7A6E58;
-  --ink-faint: #A89A7D;
-  --accent: #256B4E;         /* 邮局绿（想换/主CTA）*/
-  --accent-dark: #175038;
-  --accent-soft: #DCE9DE;
-  --green: #3B8B5C;          /* 草绿（喜欢/距离/成色）*/
-  --green-soft: #DFEBE0;
-  --red: #B3432F;            /* 印章红（算了/否定）*/
+  --bg: #F7F5ED;             /* 暖奶油背景 */
+  --bg-deep: #EDE7DA;
+  --card: #FFFFFF;           /* 卡片 */
+  --ink: #333333;            /* 标题 */
+  --ink-soft: #666666;       /* 正文 */
+  --ink-faint: #999999;      /* 说明 */
+  --accent: #4A8C6D;         /* 森林绿（想换/主CTA）*/
+  --accent-dark: #3A6E57;
+  --accent-soft: #E4F0E8;
+  --mint: #A8D9B5;           /* 薄荷（品牌辅色）*/
+  --green: #4A8C6D;          /* 正向（喜欢/距离/成色）*/
+  --green-soft: #DDEFE4;
+  --red: #B3432F;            /* 否定（算了）*/
   --red-soft: #F4E0DA;
-  --blue: #3A6B9E;           /* 票根蓝（回退）*/
-  --purple: #6C5B9E;         /* 邮戳紫（Boost）*/
+  --blue: #3A6B9E;           /* 回退 */
+  --purple: #6C5B9E;         /* Boost */
   --purple-soft: #EAE4F4;
-  --gold: #C08A1E;           /* 价签黄（会员/币）*/
+  --gold: #C08A1E;           /* 会员/换换币 */
   --gold-deep: #96660F;
   --gold-soft: #F5E6C4;
-  --line: #D9CDB2;
+  --line: #EDEAE2;
 
   background: var(--bg);
   color: var(--ink);
@@ -28,21 +29,21 @@ page {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ============ NutUI 主题覆盖（换肤到品牌绿）============ */
+/* ============ NutUI 主题覆盖（换肤到森林绿）============ */
 page {
-  --nutui-color-primary: #256B4E;
-  --nutui-color-primary-stop-1: #256B4E;
-  --nutui-color-primary-stop-2: #2E7D5B;
-  --nutui-color-primary-pressed: #175038;
-  --nutui-color-primary-disabled: #8FBBA6;
-  --nutui-color-primary-light: #DCE9DE;
+  --nutui-color-primary: #4A8C6D;
+  --nutui-color-primary-stop-1: #4A8C6D;
+  --nutui-color-primary-stop-2: #5A9B7E;
+  --nutui-color-primary-pressed: #3A6E57;
+  --nutui-color-primary-disabled: #9DC3B0;
+  --nutui-color-primary-light: #E4F0E8;
   --nutui-color-primary-text: #FFFFFF;
-  --nutui-color-success: #3B8B5C;
+  --nutui-color-success: #4A8C6D;
   --nutui-color-danger: #B3432F;
   --nutui-color-warning: #C08A1E;
-  --nutui-gray-7: #2B2417;
-  --nutui-gray-6: #7A6E58;
-  --nutui-gray-5: #A89A7D;
+  --nutui-gray-7: #333333;
+  --nutui-gray-6: #666666;
+  --nutui-gray-5: #999999;
   --nutui-font-family: inherit;
 }
 
@@ -84,7 +85,7 @@ view, text, input, textarea, button, image {
 
 /* 渐变大标题文字 */
 .text-gradient {
-  background: linear-gradient(90deg, #256B4E, #C08A1E, #5AA37F);
+  background: linear-gradient(90deg, #4A8C6D, #C08A1E, #7DB99B);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

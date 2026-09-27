@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(150deg, #EAF3EE, #DCE9DE);
+  background: linear-gradient(150deg, #EAF3EE, #E4F0E8);
 }
 .detail-sheet__emoji {
   font-size: 160rpx;
@@ -30,7 +30,7 @@
   font-weight: 800;
   color: #fff;
   background: var(--accent);
-  box-shadow: 0 8rpx 22rpx rgba(37, 107, 78, 0.3);
+  box-shadow: 0 8rpx 22rpx rgba(74, 140, 109, 0.3);
 }
 .detail-sheet__cond { left: 24rpx; }
 .detail-sheet__boost { right: 24rpx; }
@@ -218,5 +218,5 @@
 .detail-sheet__cta-primary {
   color: #fff;
   background: var(--accent);
-  box-shadow: 0 12rpx 32rpx rgba(37, 107, 78, 0.4);
+  box-shadow: 0 12rpx 32rpx rgba(74, 140, 109, 0.4);
 }

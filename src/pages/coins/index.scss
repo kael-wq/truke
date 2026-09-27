@@ -5,7 +5,7 @@
 }
 
 .coins-balance {
-  background: linear-gradient(135deg, #FAF6EA, #F0E7CF);
+  background: linear-gradient(135deg, #FFFFFF, #F0E7CF);
   border-radius: 40rpx;
   padding: 40rpx;
   text-align: center;
@@ -47,7 +47,7 @@
   &--sel {
     border-color: var(--accent);
     background: var(--accent-soft);
-    box-shadow: 0 12rpx 36rpx rgba(37, 107, 78, 0.18);
+    box-shadow: 0 12rpx 36rpx rgba(74, 140, 109, 0.18);
   }
   &__hot {
     position: absolute;
@@ -58,7 +58,7 @@
     padding: 4rpx 18rpx;
     border-radius: 18rpx;
     color: #fff;
-    &.hot { background: linear-gradient(135deg, var(--accent), #5AA37F); }
+    &.hot { background: linear-gradient(135deg, var(--accent), #7DB99B); }
     &.best { background: linear-gradient(135deg, var(--gold), #D9A838); }
   }
   &__coin { font-size: 56rpx; font-weight: 900; width: 100rpx; text-align: center; color: var(--gold-deep); }
@@ -104,12 +104,12 @@
   width: 100%;
   padding: 30rpx 0;
   border-radius: 36rpx;
-  background: linear-gradient(135deg, var(--accent), #3E8E6A);
+  background: linear-gradient(135deg, var(--accent), #5CA07F);
   color: #fff;
   font-size: 32rpx;
   font-weight: 900;
   letter-spacing: 4rpx;
-  box-shadow: 0 16rpx 44rpx rgba(37, 107, 78, 0.4);
+  box-shadow: 0 16rpx 44rpx rgba(74, 140, 109, 0.4);
 }
 .coins-cta::after {
   border: none;

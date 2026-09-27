@@ -100,7 +100,7 @@ export default function Profile() {
         </Cell.Group>
       </View>
 
-      <Text className="p-version">换换 SwapSwap v1.0 · 让闲置流动起来</Text>
+      <Text className="p-version">换换 Truke v1.0 · 让闲置流动起来</Text>
 
       <View style={{ height: '160rpx' }} />
       <TabBar current="profile" />

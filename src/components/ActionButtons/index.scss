@@ -23,32 +23,9 @@
   &--pass { color: var(--red); border: 4rpx solid var(--red-soft); }
   &--swap {
     color: #fff;
-    background: linear-gradient(135deg, var(--accent), #3E8E6A);
-    box-shadow: 0 20rpx 52rpx rgba(37, 107, 78, 0.45);
-  }
-  &--swap-gold {
-    background: linear-gradient(135deg, #D9A838, #C08A1E 40%, #E8C877 60%, #A8760F);
-    background-size: 220% 220%;
-    animation: shimmer 1s linear infinite;
-    box-shadow: 0 20rpx 60rpx rgba(192, 138, 30, 0.6);
+    background: linear-gradient(135deg, var(--accent), #5CA07F);
+    box-shadow: 0 20rpx 52rpx rgba(74, 140, 109, 0.45);
   }
   &--like { color: var(--green); border: 4rpx solid var(--green-soft); }
   &--boost { color: var(--purple); border: 4rpx solid var(--purple-soft); }
-}
-
-.abtn-sub {
-  position: absolute;
-  bottom: -34rpx;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 20rpx;
-  color: var(--ink-faint);
-  white-space: nowrap;
-  letter-spacing: 1rpx;
-}
-
-@keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }

@@ -13,8 +13,8 @@
     opacity: 0;
   }
   &--boosted {
-    border: 4rpx solid rgba(37, 107, 78, 0.55);
-    box-shadow: 0 24rpx 68rpx rgba(37, 107, 78, 0.28);
+    border: 4rpx solid rgba(74, 140, 109, 0.55);
+    box-shadow: 0 24rpx 68rpx rgba(74, 140, 109, 0.28);
   }
 
   &__photo {
@@ -53,11 +53,11 @@
     z-index: 3;
     padding: 8rpx 20rpx;
     border-radius: 26rpx;
-    background: linear-gradient(135deg, #256B4E, #5AA37F);
+    background: linear-gradient(135deg, #4A8C6D, #7DB99B);
     color: #fff;
     font-size: 24rpx;
     font-weight: 700;
-    box-shadow: 0 8rpx 24rpx rgba(37, 107, 78, 0.4);
+    box-shadow: 0 8rpx 24rpx rgba(74, 140, 109, 0.4);
   }
   &__wishbar {
     position: absolute;

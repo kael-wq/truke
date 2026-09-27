@@ -34,7 +34,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  background: rgba(37, 107, 78, 0.9);
+  background: rgba(74, 140, 109, 0.9);
   color: #fff;
   font-size: 20rpx;
   font-weight: 900;
@@ -106,72 +106,3 @@
   }
 }
 
-.pin-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--card);
-  border-radius: 28rpx;
-  padding: 26rpx 28rpx;
-}
-.pin-info {
-  flex: 1;
-  margin-right: 20rpx;
-}
-.pin-title {
-  font-size: 28rpx;
-  font-weight: 900;
-  display: block;
-}
-.pin-sub {
-  font-size: 23rpx;
-  color: var(--ink-soft);
-  margin-top: 6rpx;
-  display: block;
-}
-.pin-cost {
-  font-size: 24rpx;
-  font-weight: 900;
-  color: var(--gold-deep);
-  margin-top: 8rpx;
-  display: block;
-}
-.switch {
-  width: 96rpx;
-  height: 56rpx;
-  border-radius: 28rpx;
-  background: var(--line);
-  position: relative;
-  flex: none;
-  transition: background 0.2s;
-  padding: 6rpx;
-
-  &--on { background: var(--accent); }
-}
-.switch__knob {
-  width: 44rpx;
-  height: 44rpx;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s;
-}
-.switch--on .switch__knob {
-  transform: translateX(40rpx);
-}
-
-.pub-submit {
-  width: 100%;
-  padding: 30rpx 0;
-  border-radius: 36rpx;
-  background: linear-gradient(135deg, var(--accent), #3E8E6A);
-  color: #fff;
-  font-size: 32rpx;
-  font-weight: 900;
-  letter-spacing: 4rpx;
-  box-shadow: 0 16rpx 44rpx rgba(37, 107, 78, 0.4);
-  margin-top: 20rpx;
-}
-.pub-submit::after {
-  border: none;
-}

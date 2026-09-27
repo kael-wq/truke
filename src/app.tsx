@@ -11,7 +11,7 @@ function App({ children }: PropsWithChildren<any>) {
     // 初始化云开发环境（请替换成你自己的环境 ID）
     if (Taro.cloud) {
       Taro.cloud.init({
-        env: 'swapswap-xxxxxx', // TODO: 替换为你的云开发环境 ID
+        env: 'truke-xxxxxx', // TODO: 替换为你的云开发环境 ID
         traceUser: true
       })
     }

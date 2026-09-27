@@ -1,8 +1,8 @@
 {
   "miniprogramRoot": "dist/",
   "cloudfunctionRoot": "cloudfunctions/",
-  "projectname": "swapswap",
-  "description": "换换 SwapSwap - 闲置物品交换小程序",
+  "projectname": "truke",
+  "description": "换换 Truke - 闲置物品交换小程序",
   "appid": "wx939509802b450773",
   "setting": {
     "urlCheck": false,

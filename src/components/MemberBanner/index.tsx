@@ -30,7 +30,6 @@ export default function MemberBanner() {
       <View className="mb-benefits">
         <Text>⚡ 每月5次免费Boost</Text>
         <Text>👀 看谁想换你</Text>
-        <Text>↩ 无限回退</Text>
         <Text>👑 专属会员标识</Text>
       </View>
     </View>

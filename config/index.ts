@@ -5,7 +5,7 @@ import prodConfig from './prod'
 
 // https://taro-docs.jd.com/docs/config
 const baseConfig = {
-  projectName: 'swapswap',
+  projectName: 'truke',
   date: '2024-1-1',
   // NutUI 设计稿基准为 375；自有样式全部用 rpx，不受此值影响
   designWidth: 375,

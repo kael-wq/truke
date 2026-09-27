@@ -1,4 +1,4 @@
-# 换换 SwapSwap · 闲置物品交换小程序
+# 换换 Truke · 闲置物品交换小程序
 
 Tinder 的交互，但换的是「闲置物品」而不是人。Taro 3.x + React + TypeScript + Zustand + 微信云开发。
 
@@ -59,7 +59,7 @@ npm run dev:weapp
 ### 配置云开发
 
 1. 微信开发者工具 → 云开发 → 开通并创建环境，复制环境 ID
-2. 修改 `src/app.tsx` 里的 `env: 'swapswap-xxxxxx'`
+2. 修改 `src/app.tsx` 里的 `env: 'truke-xxxxxx'`
 3. 修改 `project.config.json` 的 `appid` 为你的小程序 AppID（`touristappid` 无法用云开发）
 4. 右键 `cloudfunctions` 下每个函数 → 上传并部署（云端安装依赖）
 5. `matchJob` 需在云开发控制台确认定时触发器

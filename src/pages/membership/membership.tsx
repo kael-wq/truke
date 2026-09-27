@@ -1,6 +1,6 @@
 import { View, Text } from '@tarojs/components'
 import { Cell, Button } from '@nutui/nutui-react-taro'
-import { DoubleArrowUp, Search, Undo, Star } from '@nutui/icons-react-taro'
+import { DoubleArrowUp, Search, Star } from '@nutui/icons-react-taro'
 import Taro from '@tarojs/taro'
 import { useUserStore } from '../../stores/useUserStore'
 import { MEMBER_PRICE, subscribeMember } from '../../services/payment'
@@ -9,13 +9,11 @@ import './index.scss'
 const BENEFITS = [
   { Icon: DoubleArrowUp, title: '每月 5 次免费 Boost', desc: '让你的闲置获得更多曝光' },
   { Icon: Search, title: '看谁想换你', desc: '解锁模糊头像，第一时间知道谁对你感兴趣' },
-  { Icon: Undo, title: '无限回退', desc: '手滑错过？随便退，不限次数' },
   { Icon: Star, title: '专属会员标识', desc: '个人主页金色标识，身份象征' }
 ]
 
 const COMPARE = [
   { name: 'Boost 曝光', free: '1币/次', member: '每月5次免费' },
-  { name: '回退', free: '1币/次', member: '无限免费' },
   { name: '查看想换你的人', free: '模糊头像', member: '完整可见' },
   { name: '会员标识', free: '—', member: '👑 金色标识' }
 ]

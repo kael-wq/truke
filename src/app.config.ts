@@ -13,7 +13,7 @@ export default defineAppConfig({
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#EBE2CE',
-    navigationBarTitleText: '换换',
+    navigationBarTitleText: '换换 Truke',
     navigationBarTextStyle: 'black',
     backgroundColor: '#EBE2CE'
   },
