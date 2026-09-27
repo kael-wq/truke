@@ -1,7 +1,6 @@
 import { View, Text } from '@tarojs/components'
 import Taro, { useLoad } from '@tarojs/taro'
 import { useState } from 'react'
-import CategoryTabs from '../../components/CategoryTabs'
 import CardStack from '../../components/CardStack'
 import ActionButtons from '../../components/ActionButtons'
 import MatchModal from '../../components/MatchModal'
@@ -34,8 +33,6 @@ export default function Index() {
           <Text className="logo-sub">SwapSwap</Text>
         </View>
       </View>
-
-      <CategoryTabs />
 
       <View className="index-stack-wrap">
         <CardStack />

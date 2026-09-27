@@ -76,18 +76,6 @@ body{
   box-shadow:0 4px 10px rgba(232,87,42,.35);transform:rotate(-4deg);
 }
 .logo small{font-family:'Outfit';font-weight:700;font-size:11px;color:var(--ink-faint);letter-spacing:1px;margin-left:2px}
-/* ============ Category tabs ============ */
-.categories{
-  flex:none;display:flex;gap:8px;padding:6px 16px 12px;overflow-x:auto;scrollbar-width:none;position:relative;z-index:9;
-}
-.categories::-webkit-scrollbar{display:none}
-.cat{
-  flex:none;padding:8px 16px;border-radius:20px;border:none;cursor:pointer;
-  background:transparent;color:var(--ink-soft);font-family:inherit;font-size:14px;font-weight:700;
-  transition:all .2s;white-space:nowrap;
-}
-.cat.active{background:var(--ink);color:#FFFDF7;box-shadow:0 5px 14px rgba(45,42,36,.25)}
-
 /* ============ Main / views ============ */
 .main{flex:1;position:relative;overflow:hidden}
 .view{position:absolute;inset:0;display:none;overflow-y:auto;scrollbar-width:none}
@@ -468,8 +456,6 @@ body{
     </div>
   </header>
 
-  <!-- Category tabs -->
-  <nav class="categories" id="categories"></nav>
 
   <!-- Main -->
   <main class="main">
@@ -1043,18 +1029,6 @@ function setView(name){
 $$('.nav-item').forEach(b=>b.addEventListener('click', ()=>setView(b.dataset.nav)));
 $('#btnPublish').addEventListener('click', openPublish);
 
-/* ===================== Categories ===================== */
-function renderCats(){
-  const c = $('#categories');
-  c.innerHTML = CATEGORIES.map(cat=>`<button class="cat ${cat===state.activeCat?'active':''}" data-cat="${cat}">${cat}</button>`).join('');
-  c.querySelectorAll('.cat').forEach(b=>b.addEventListener('click', ()=>{
-    state.activeCat = b.dataset.cat;
-    state.history = [];
-    renderCats(); buildDeck();
-  }));
-}
-renderCats();
-
 /* ===================== Messages ===================== */
 function renderMessages(){
   const box = $('#msgList');
@@ -1190,7 +1164,7 @@ $('#btnPublish').addEventListener('click', ()=>{
   state.pinOnPublish = false; $('#pubPinSwitch').classList.remove('on');
   $('#pubTitle').value=''; $('#pubWish').value='';
   closeSheets();
-  setView('discover'); state.activeCat='附近'; state.history=[]; renderCats(); buildDeck();
+  setView('discover'); state.activeCat='附近'; state.history=[]; buildDeck();
 });
 $('#pubClose').addEventListener('click', ()=>$('#publishSheet').classList.remove('open'));
 
